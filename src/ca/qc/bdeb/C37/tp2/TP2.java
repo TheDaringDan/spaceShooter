@@ -19,7 +19,9 @@ public class TP2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Fenetre(500, 700, "Invader", new Jeu());
+        //new Fenetre(500, 700, "Invader", new Jeu());
+        Modele modele = new Modele();
+        Vue vue = new Vue();
     }
     
 }

@@ -8,12 +8,16 @@ package ca.qc.bdeb.C37.tp2;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,8 +43,15 @@ public class Vue implements MouseMotionListener, MouseListener{
         panel.addMouseMotionListener(this);
         panel.setBackground(Color.black);
         
-        ImageIcon playerImg = new ImageIcon("res/player.png");
-        player =  new JLabel(playerImg);
+        BufferedImage playerImg;
+        try {
+            playerImg = ImageIO.read(new File("res/player.png"));
+        } catch(IOException e){
+            playerImg = null;
+        }
+        ImageIcon playerSprite;
+        
+        player =  new JLabel(new ImageIcon(playerImg));
         panel.add(player);
         player.setBounds(225,550,50,50);
         frame.add(panel);
