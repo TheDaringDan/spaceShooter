@@ -29,7 +29,7 @@ public class Pointeur extends ObjetJeu {
 
     @Override
     public Rectangle contact() {
-        return new Rectangle((int)x, (int)y, 4, 4);
+        return new Rectangle((int)x, (int)y, 1, 1);
     }
 
     @Override

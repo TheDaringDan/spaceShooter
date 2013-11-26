@@ -22,13 +22,11 @@ public class Joueur extends ObjetJeu {
      * Informations du vaisseau
      * L = largeur, H = hauteur, V = vitesse
      */
-    public static final int L = 50, H = 55, V = 7;
+    public static final int L = 50, H = 55, V = 8;
     
     ControlleurObjets controlleur;
     
     // Facteurs pour calculer la vitesse diagonale
-    float dX;
-    float dY;
     float delta;
 
     public Joueur(float x, float y, ControlleurObjets controlleur, IdObjet id) {
@@ -39,11 +37,11 @@ public class Joueur extends ObjetJeu {
 
     @Override
     public void tick(LinkedList<ObjetJeu> objets) {
-        dX = velX - Joueur.L/2;
-        dY = velY - Joueur.H/2;
-        delta = (float) Math.sqrt(dX * dX + dY * dY);
-        x += Joueur.V * dX/delta;
-        y += Joueur.V * dY/delta;
+        if (velX != 0 || velY != 0) {
+            delta = (float) Math.sqrt(velX * velX + velY * velY);
+            x += Joueur.V * velX/delta;
+            y += Joueur.V * velY/delta;
+        }
         
         gererCollision(objets);
     }
@@ -58,7 +56,7 @@ public class Joueur extends ObjetJeu {
                     velY = 0;
                 }
                 if (contactBas().intersects(temp.contact())) {
-                    y = temp.getY() - H + 3;
+                    y = temp.getY() - H - 3;
                     velY = 0;
                 }
                 if (contactGauche().intersects(temp.contact())) {
@@ -89,7 +87,10 @@ public class Joueur extends ObjetJeu {
         
         Graphics2D g2d = (Graphics2D) g;
         g.setColor(Color.red);
-        g2d.draw(contact());
+        g2d.draw(contactHaut());
+        g2d.draw(contactBas());
+        g2d.draw(contactGauche());
+        g2d.draw(contactDroite());
     }
     
     @Override
@@ -112,13 +113,17 @@ public class Joueur extends ObjetJeu {
     public Rectangle contact() {
         return new Rectangle((int)x + 10, (int)y + 10, L - 20, H - 10);
     }
+    
+//    public Rectangle contactCentre() {
+//        return new Rectangle((int)x + L/2-5, (int)y + H/2-7, 10, 14);
+//    }
 
     public Rectangle contactHaut() {
         return new Rectangle((int)x + 20, (int)y + 5, L - 40, H/2 - 5);
     }
 
     public Rectangle contactBas() {
-        return new Rectangle((int)x + 20, (int)y + H/2, L - 40, H/2 - 5);
+        return new Rectangle((int)x + 20, (int)y + H/2 + 5, L - 40, H/2 - 5);
     }
 
     public Rectangle contactDroite() {

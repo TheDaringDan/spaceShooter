@@ -38,6 +38,10 @@ public class Jeu extends Canvas implements Runnable {
      * Objets
      */
     ControlleurObjets controlleur;
+    
+    /**
+     * Image de fond
+     */
     Image fond;
     
     /**
@@ -89,7 +93,7 @@ public class Jeu extends Canvas implements Runnable {
         requestFocus();
         
         long lastTime = System.nanoTime();
-        double amountOfTicks = 50.0;
+        double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();

@@ -36,8 +36,12 @@ public abstract class ObjetJeu {
     }
     
     public abstract void tick(LinkedList<ObjetJeu> objets);
+    
     public abstract void render(Graphics g);
+    
     public abstract Rectangle contact();
+    
+    public abstract void setImg();
     
     public float getX() {
         return x;
@@ -74,6 +78,4 @@ public abstract class ObjetJeu {
     public void setVelY(float velY) {
         this.velY = velY;
     }
-    
-    public abstract void setImg();
 }

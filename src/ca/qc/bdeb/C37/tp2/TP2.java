@@ -19,7 +19,7 @@ public class TP2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new Vue(Jeu.L, Jeu.H, "Invader", new Jeu());
+        Vue vue = new Vue(Jeu.L, Jeu.H, "Invader", new Jeu());
     }
     
 }
