@@ -6,7 +6,7 @@
 
 package ca.qc.bdeb.C37.tp2;
 
-import ca.qc.bdeb.C37.tp2.window.Fenetre;
+import ca.qc.bdeb.C37.tp2.window.Vue;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
 
 /**
@@ -19,9 +19,7 @@ public class TP2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //new Fenetre(500, 700, "Invader", new Jeu());
-        Modele modele = new Modele();
-        Vue vue = new Vue();
+        new Vue(Jeu.L, Jeu.H, "Invader", new Jeu());
     }
     
 }
