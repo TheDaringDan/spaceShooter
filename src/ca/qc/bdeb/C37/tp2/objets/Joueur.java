@@ -85,12 +85,13 @@ public class Joueur extends ObjetJeu {
     public void render(Graphics g) {
         g.drawImage(img, (int)x, (int)y, L, H, null);
         
-        Graphics2D g2d = (Graphics2D) g;
-        g.setColor(Color.red);
-        g2d.draw(contactHaut());
-        g2d.draw(contactBas());
-        g2d.draw(contactGauche());
-        g2d.draw(contactDroite());
+//        Graphics2D g2d = (Graphics2D) g;
+//        g.setColor(Color.red);
+//        g2d.draw(contact());
+//        g2d.draw(contactHaut());
+//        g2d.draw(contactBas());
+//        g2d.draw(contactGauche());
+//        g2d.draw(contactDroite());
     }
     
     @Override

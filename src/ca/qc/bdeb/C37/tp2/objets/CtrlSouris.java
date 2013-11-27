@@ -31,8 +31,19 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
             temp = controlleur.objets.get(i);
 
             if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
-                temp.setVelX(e.getX() - (temp.getX() + Joueur.L/2));
-                temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
+                
+                if (e.getX() > 8 && e.getX() < Jeu.L - 8) {
+                    temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
+                }
+                else {
+                    temp.setVelY(0);
+                }
+                if (e.getY() > Jeu.H*2/3 && e.getX() < Jeu.H - 10) {
+                    temp.setVelX(e.getX() - (temp.getX() + Joueur.L/2));
+                }
+                else {
+                    temp.setVelX(0);
+                }
             }
             else if (temp.id == IdObjet.Pointeur) {
                 temp.setX(e.getX());
