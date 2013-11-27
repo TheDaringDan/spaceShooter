@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  *
  * @author Danmasta97
  */
-public class Vue implements MouseMotionListener, MouseListener {
+public class Vue2 implements MouseMotionListener, MouseListener {
 
     private int mouseX;
     private int mouseY;
@@ -35,7 +35,7 @@ public class Vue implements MouseMotionListener, MouseListener {
     JFrame frame;
     JLabel player;
 
-    public Vue() {
+    public Vue2() {
         mouseX = 0;
         mouseY = 0;
         JPanel panel = new JPanel();
@@ -93,17 +93,17 @@ public class Vue implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent me) {
-    
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-     
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-     
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Vue implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent me) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

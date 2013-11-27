@@ -1,6 +1,5 @@
 package ca.qc.bdeb.C37.tp2.window;
 
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -14,21 +13,25 @@ import javax.swing.JFrame;
 public class Vue {
     
     /**
+     * Dimensions de l'aire de jeu
+     */
+    public static final int L = 500, H = 700;
+    
+    /**
      * Constructeur.
      * 
-     * @param l largeur
-     * @param h hauteur
      * @param titre
-     * @param jeu 
      */
-    public Vue(int l, int h, String titre, Jeu jeu) {
+    public Vue(String titre) {
+        
+        Jeu jeu = new Jeu();
         
         BufferedImage curseur =
                 new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         
-        jeu.setPreferredSize(new Dimension(l, h));
-        jeu.setMaximumSize(new Dimension(l, h));
-        jeu.setMinimumSize(new Dimension(l, h));
+        jeu.setPreferredSize(new Dimension(L, H));
+        jeu.setMaximumSize(new Dimension(L, H));
+        jeu.setMinimumSize(new Dimension(L, H));
         
         JFrame frame = new JFrame(titre);
         frame.add(jeu);

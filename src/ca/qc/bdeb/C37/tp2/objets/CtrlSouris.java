@@ -1,7 +1,7 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import ca.qc.bdeb.C37.tp2.window.ControlleurObjets;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
+import ca.qc.bdeb.C37.tp2.window.Vue;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -32,13 +32,13 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
 
             if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
                 
-                if (e.getX() > 8 && e.getX() < Jeu.L - 8) {
+                if (e.getX() > 8 && e.getX() < Vue.L - 8) {
                     temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
                 }
                 else {
                     temp.setVelY(0);
                 }
-                if (e.getY() > Jeu.H*2/3 && e.getX() < Jeu.H - 10) {
+                if (e.getY() > Vue.H/2 && e.getX() < Vue.H - 15) {
                     temp.setVelX(e.getX() - (temp.getX() + Joueur.L/2));
                 }
                 else {
