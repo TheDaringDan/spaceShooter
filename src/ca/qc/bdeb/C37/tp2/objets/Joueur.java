@@ -1,12 +1,11 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
+import static ca.qc.bdeb.C37.tp2.Vue.splitImage;
 import ca.qc.bdeb.C37.tp2.window.ControlleurObjets;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -24,6 +23,9 @@ public class Joueur extends ObjetJeu {
      */
     public static final int L = 50, H = 55, V = 8;
     
+    public BufferedImage playerSprite[];
+    public int frame = 0;
+    public int timer = 0;
     ControlleurObjets controlleur;
     
     // Facteurs pour calculer la vitesse diagonale
@@ -37,6 +39,11 @@ public class Joueur extends ObjetJeu {
 
     @Override
     public void tick(LinkedList<ObjetJeu> objets) {
+        if(++timer >= 3){
+            ++frame;
+            timer = 0;
+        }
+        if(frame >= 4) frame = 0;
         if (velX != 0 || velY != 0) {
             delta = (float) Math.sqrt(velX * velX + velY * velY);
             x += Joueur.V * velX/delta;
@@ -83,6 +90,7 @@ public class Joueur extends ObjetJeu {
 
     @Override
     public void render(Graphics g) {
+        this.img = playerSprite[frame];
         g.drawImage(img, (int)x, (int)y, L, H, null);
         
 //        Graphics2D g2d = (Graphics2D) g;
@@ -96,23 +104,20 @@ public class Joueur extends ObjetJeu {
     
     @Override
     public final void setImg() {
-        File fichier;
-        Image image;
-        
-        fichier = new File("res/vaisseau.png");
-        
+        BufferedImage playerImg;
         try {
-            image = ImageIO.read(fichier);
-            
-            this.img = image;
-        } catch (IOException ex) {
-            System.out.println("Erreur : Image non-chargée.");
+            playerImg = ImageIO.read(new File("res/player.png"));
+        } catch (IOException e) {
+            playerImg = null;
         }
+        playerSprite = splitImage(playerImg, 4, 2);
+        
+        this.img = playerSprite[frame];
     }
 
     @Override
     public Rectangle contact() {
-        return new Rectangle((int)x + 10, (int)y + 10, L - 20, H - 10);
+        return new Rectangle((int)x, (int)y + 10, L, H - 10);
     }
     
 //    public Rectangle contactCentre() {
@@ -133,6 +138,16 @@ public class Joueur extends ObjetJeu {
 
     public Rectangle contactGauche() {
         return new Rectangle((int)x, (int)y + 10, 8, H - 20);
+    }
+    
+    @Override
+    public float getX(){
+        return x;
+    }
+    
+    @Override
+    public float getY(){
+        return y;
     }
 
 }

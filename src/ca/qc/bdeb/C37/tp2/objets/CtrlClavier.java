@@ -37,9 +37,17 @@ public class CtrlClavier extends KeyAdapter {
 
                     if (touche == KeyEvent.VK_DOWN) {
                         temp.setVelY(1);
-                    }
+                    } 
                     else if (touche == KeyEvent.VK_UP) {
                         temp.setVelY(-1);
+                    }
+                    
+                    if (touche == KeyEvent.VK_SPACE){
+                        if (TirJoueur.isReady()){
+                            controlleur.ajouterObjet(new TirJoueur(
+                                 (int)temp.getX()+(Joueur.L/2 - TirJoueur.L/2), 
+                                 (int)temp.getY(), IdObjet.TirNormal));
+                        }
                     }
                 }
             }

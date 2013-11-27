@@ -58,6 +58,17 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        ObjetJeu temp;
+         
+        for (int i = 0; i < controlleur.objets.size(); i++) {
+            temp = controlleur.objets.get(i);
+
+            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
+                
+               controlleur.ajouterObjet(new TirJoueur((int)temp.getX(), 
+                                (int)temp.getY(), IdObjet.TirNormal));
+            }
+        }
     }
 
     @Override

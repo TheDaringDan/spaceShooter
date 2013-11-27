@@ -7,5 +7,6 @@ package ca.qc.bdeb.C37.tp2.objets;
 public enum IdObjet {
     Joueur(),
     Frontiere(),
-    Pointeur();
+    Pointeur(),
+    TirNormal();
 }

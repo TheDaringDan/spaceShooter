@@ -3,6 +3,7 @@ package ca.qc.bdeb.C37.tp2.window;
 import ca.qc.bdeb.C37.tp2.objets.Frontiere;
 import ca.qc.bdeb.C37.tp2.objets.IdObjet;
 import ca.qc.bdeb.C37.tp2.objets.ObjetJeu;
+import ca.qc.bdeb.C37.tp2.objets.TirJoueur;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
@@ -21,7 +22,12 @@ public class ControlleurObjets {
             objetTemp = objets.get(i);
             
             objetTemp.tick(objets);
+            if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.getY() < -TirJoueur.H){
+                enleverObjet(objetTemp);
+            }
         }
+        
+        TirJoueur.decrementerReady();
     }
     
     public void render(Graphics g) {
