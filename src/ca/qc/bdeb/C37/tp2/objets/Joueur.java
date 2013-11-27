@@ -1,6 +1,5 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import ca.qc.bdeb.C37.tp2.window.ControlleurObjets;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
 import java.awt.Color;
 import java.awt.Graphics;

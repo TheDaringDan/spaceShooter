@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  *
  * @author Danmasta97
  */
-public class Vue implements MouseMotionListener, MouseListener {
+public class Vue2 implements MouseMotionListener, MouseListener {
 
     private int mouseX;
     private int mouseY;
@@ -35,7 +35,7 @@ public class Vue implements MouseMotionListener, MouseListener {
     JFrame frame;
     JLabel player;
 
-    public Vue() {
+    public Vue2() {
         mouseX = 0;
         mouseY = 0;
         JPanel panel = new JPanel();

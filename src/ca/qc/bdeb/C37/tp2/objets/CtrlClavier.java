@@ -1,6 +1,5 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import ca.qc.bdeb.C37.tp2.window.ControlleurObjets;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -45,10 +44,12 @@ public class CtrlClavier extends KeyAdapter {
             }
         }
         
+        // Quitter
         if (touche == KeyEvent.VK_ESCAPE) {
             System.exit(1);
         }
         
+        // Changer les contrôles
         if (touche == KeyEvent.VK_C) {
             if (Jeu.ctrl == IdCtrl.CLAVIER) {
                 Jeu.ctrl = IdCtrl.SOURIS;

@@ -1,8 +1,9 @@
-package ca.qc.bdeb.C37.tp2.window;
+package ca.qc.bdeb.C37.tp2.objets;
 
 import ca.qc.bdeb.C37.tp2.objets.Frontiere;
 import ca.qc.bdeb.C37.tp2.objets.IdObjet;
 import ca.qc.bdeb.C37.tp2.objets.ObjetJeu;
+import ca.qc.bdeb.C37.tp2.window.Vue;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
@@ -53,19 +54,19 @@ public class ControlleurObjets {
     
     public void dessinerFrontieres() {
         // Haut
-        ajouterObjet(new Frontiere(0, Jeu.H*2/3, this,
-                IdObjet.Frontiere, Jeu.L, 2));
+        ajouterObjet(new Frontiere(0, Vue.H*2/3, this,
+                IdObjet.Frontiere, Vue.L, 2));
         
         // Bas
-        ajouterObjet(new Frontiere(0, Jeu.H-2, this,
-                IdObjet.Frontiere, Jeu.L, 2));
+        ajouterObjet(new Frontiere(0, Vue.H-2, this,
+                IdObjet.Frontiere, Vue.L, 2));
         
         // Gauche
-        ajouterObjet(new Frontiere(0, Jeu.H*2/3, this,
-                IdObjet.Frontiere, 2, Jeu.H/3));
+        ajouterObjet(new Frontiere(0, Vue.H*2/3, this,
+                IdObjet.Frontiere, 2, Vue.H/3));
         
         // Droite
-        ajouterObjet(new Frontiere(Jeu.L-2, Jeu.H*2/3, this,
-                IdObjet.Frontiere, 2, Jeu.H/3));
+        ajouterObjet(new Frontiere(Vue.L-2, Vue.H*2/3, this,
+                IdObjet.Frontiere, 2, Vue.H/3));
     }
 }

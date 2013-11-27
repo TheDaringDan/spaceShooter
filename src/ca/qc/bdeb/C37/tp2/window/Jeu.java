@@ -25,11 +25,6 @@ public class Jeu extends Canvas implements Runnable {
     private Thread thread;
     
     /**
-     * Dimensions de l'aire de jeu
-     */
-    public static final int L = 500, H = 700;
-    
-    /**
      * Choix de contrôles
      */
     public static IdCtrl ctrl;
@@ -59,7 +54,7 @@ public class Jeu extends Canvas implements Runnable {
         controlleur.dessinerFrontieres();
         
         // Ajouter le joueur
-        controlleur.ajouterObjet(new Joueur(L/2-25, H*3/4,
+        controlleur.ajouterObjet(new Joueur(Vue.L/2-25, Vue.H*3/4,
                 controlleur, IdObjet.Joueur));
         
         // Ajouter le pointeur
