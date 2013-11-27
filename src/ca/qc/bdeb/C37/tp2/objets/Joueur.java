@@ -1,7 +1,6 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import static ca.qc.bdeb.C37.tp2.Vue.splitImage;
-import ca.qc.bdeb.C37.tp2.window.ControlleurObjets;
+import static ca.qc.bdeb.C37.tp2.Vue2.splitImage;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
 import java.awt.Graphics;
 import java.awt.Rectangle;
