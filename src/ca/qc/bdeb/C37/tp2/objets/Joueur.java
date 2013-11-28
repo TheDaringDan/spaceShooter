@@ -26,6 +26,7 @@ public class Joueur extends ObjetJeu {
     public int frame = 0;
     public int timer = 0;
     ControlleurObjets controlleur;
+    boolean exploding = false;
     
     // Facteurs pour calculer la vitesse diagonale
     float delta;
@@ -37,12 +38,18 @@ public class Joueur extends ObjetJeu {
     }
 
     @Override
+    @SuppressWarnings("empty-statement")
     public void tick(LinkedList<ObjetJeu> objets) {
         if(++timer >= 3){
-            ++frame;
+                ++frame;
+            if (exploding && frame == 3){
+                controlleur.enleverObjet(this);
+            }
+            
             timer = 0;
         }
-        if(frame >= 4) frame = 0;
+        if(frame >= 4 || exploding == false) frame = 0;
+        
         if (velX != 0 || velY != 0) {
             delta = (float) Math.sqrt(velX * velX + velY * velY);
             x += Joueur.V * velX/delta;
@@ -90,6 +97,7 @@ public class Joueur extends ObjetJeu {
     @Override
     public void render(Graphics g) {
         this.img = playerSprite[frame];
+        
         g.drawImage(img, (int)x, (int)y, L, H, null);
         
 //        Graphics2D g2d = (Graphics2D) g;
@@ -148,5 +156,17 @@ public class Joueur extends ObjetJeu {
     public float getY(){
         return y;
     }
-
+    
+    public void detruireJoueur(){
+        BufferedImage playerImg;
+        try {
+            playerImg = ImageIO.read(new File("res/playerExploding.png"));
+        } catch (IOException e) {
+            playerImg = null;
+        }
+        playerSprite = splitImage(playerImg, 4, 1);
+        
+        exploding = true;
+        frame = 0;
+    }
 }
