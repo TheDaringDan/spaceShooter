@@ -18,7 +18,7 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * État du jeu
      */
-    private boolean running = false;
+    public boolean running = false, paused = false;
     /**
      * Thread du jeu
      */
@@ -27,7 +27,8 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * Choix de contrôles
      */
-    public static IdCtrl ctrl;
+    public IdCtrl ctrl;
+    private IdCtrl memCtrl;
     
     /**
      * Objets
@@ -38,6 +39,12 @@ public class Jeu extends Canvas implements Runnable {
      * Image de fond
      */
     Image fond;
+    
+    
+    /**
+     * 
+     */
+    public static Menu menu;
     
     /**
      * Innitialisation du jeu
@@ -55,14 +62,14 @@ public class Jeu extends Canvas implements Runnable {
         
         // Ajouter le joueur
         controlleur.ajouterObjet(new Joueur(Vue.L/2-25, Vue.H*3/4,
-                controlleur, IdObjet.Joueur));
+                controlleur, this, IdObjet.Joueur));
         
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
         
-        addKeyListener(new CtrlClavier(controlleur));
+        addKeyListener(new CtrlClavier(controlleur, this));
         
-        addMouseMotionListener(new CtrlSouris(controlleur));
+        addMouseMotionListener(new CtrlSouris(controlleur, this));
         
     }
     
@@ -70,12 +77,30 @@ public class Jeu extends Canvas implements Runnable {
      * Démarage de la partie
      */
     public synchronized void start() {
-        // Sécurité
-        if (running) return;
+        if (running)
+            return;
         
-        running = true;
         thread = new Thread(this);
         thread.start();
+        running = true;
+        pause();
+    }
+    
+    public void pause() {
+        memCtrl = ctrl;
+        ctrl = null;
+        paused = true;
+        
+        menu = new Menu(this);
+    }
+    
+    public void resume() {
+        menu.dispose();
+        ctrl = memCtrl;
+        if (ctrl == null)
+            ctrl = IdCtrl.CLAVIER;
+        
+        paused = false;
     }
 
     /**
@@ -95,22 +120,28 @@ public class Jeu extends Canvas implements Runnable {
         int updates = 0;
         int frames = 0;
         while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-            while (delta >= 1) {
-                tick();
-                updates++;
-                delta--;
+            if (!paused) {
+                long now = System.nanoTime();
+                delta += (now - lastTime) / ns;
+                lastTime = now;
+                while (delta >= 1) {
+                    tick();
+                    updates++;
+                    delta--;
+                }
+                render();
+                frames++;
+
+                if (System.currentTimeMillis() - timer > 1000) {
+                    timer += 1000;
+                    System.out.println("FPS: " + frames + " TICKS: " + updates);
+                    frames = 0;
+                    updates = 0;
+                }
             }
-            render();
-            frames++;
-            
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                System.out.println("FPS: " + frames + " TICKS: " + updates);
-                frames = 0;
-                updates = 0;
+            else {
+                lastTime = System.nanoTime();
+                timer = System.currentTimeMillis();
             }
         }
     }

@@ -25,14 +25,19 @@ public class Joueur extends ObjetJeu {
     public BufferedImage playerSprite[];
     public int frame = 0;
     public int timer = 0;
+    private Jeu jeu;
+    
     ControlleurObjets controlleur;
     
     // Facteurs pour calculer la vitesse diagonale
     float delta;
 
-    public Joueur(float x, float y, ControlleurObjets controlleur, IdObjet id) {
+    public Joueur
+        (float x, float y, ControlleurObjets controlleur, Jeu jeu, IdObjet id) {
+            
         super(x, y, id);
         setImg();
+        this.jeu = jeu;
         this.controlleur = controlleur;
     }
 
@@ -77,7 +82,7 @@ public class Joueur extends ObjetJeu {
             else if (temp.getId() == IdObjet.Pointeur) {
                 
                 if (contact().intersects(temp.contact()) &&
-                        Jeu.ctrl == IdCtrl.SOURIS) {
+                        jeu.ctrl == IdCtrl.SOURIS) {
                     
                     velX = 0;
                     velY = 0;

@@ -13,9 +13,11 @@ import java.awt.event.MouseMotionListener;
 public class CtrlSouris implements MouseMotionListener, MouseListener {
 
     ControlleurObjets controlleur;
+    Jeu jeu;
     
-    public CtrlSouris (ControlleurObjets controlleur) {
+    public CtrlSouris (ControlleurObjets controlleur, Jeu jeu) {
         this.controlleur = controlleur;
+        this.jeu = jeu;
     }
     
     @Override
@@ -30,7 +32,7 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
         for (int i = 0; i < controlleur.objets.size(); i++) {
             temp = controlleur.objets.get(i);
 
-            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
+            if (temp.id == IdObjet.Joueur && jeu.ctrl == IdCtrl.SOURIS) {
                 
                 if (e.getX() > 8 && e.getX() < Vue.L - 8) {
                     temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
@@ -63,7 +65,7 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
         for (int i = 0; i < controlleur.objets.size(); i++) {
             temp = controlleur.objets.get(i);
 
-            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
+            if (temp.id == IdObjet.Joueur && jeu.ctrl == IdCtrl.SOURIS) {
                 
                 controlleur.ajouterObjet(new TirJoueur((int)temp.getX(), 
                                 (int)temp.getY(), IdObjet.TirNormal));
