@@ -14,14 +14,21 @@ public class ControlleurObjets {
     
     private ObjetJeu objetTemp;
     
+    
     public void tick() {
         for (int i = 0; i < objets.size(); i++) {
             objetTemp = objets.get(i);
             
             objetTemp.tick(objets);
             
-            if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.getY() < 0){
+        
+            if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.y < 0) {
                 enleverObjet(objetTemp);
+            }
+            else if
+                (objetTemp.getId() == IdObjet.Ennemi && objetTemp.y > Vue.H) {
+                
+                objets.get(i).y = 20;
             }
         }
         
