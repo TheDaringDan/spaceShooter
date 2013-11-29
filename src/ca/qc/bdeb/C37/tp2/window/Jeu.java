@@ -63,15 +63,10 @@ public class Jeu extends Canvas implements Runnable {
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
 
-        // Ajoute 5 ennemis (test)
-        for (int i = 0; i < 5; i++) {
-            controlleur.ajouterObjet(new Ennemi(rand.nextFloat() * 
-                    (Vue.L - 50f) + 25f, controlleur, IdObjet.Ennemi));
-        }
+        // Ajoute des ennemis (test)
+        controlleur.spawnMobs();
         
-
         addKeyListener(new CtrlClavier(controlleur));
-
         CtrlSouris souris = new CtrlSouris(controlleur);
         addMouseMotionListener(souris);
         addMouseListener(souris);

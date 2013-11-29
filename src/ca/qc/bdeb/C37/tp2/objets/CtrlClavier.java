@@ -54,7 +54,7 @@ public class CtrlClavier extends KeyAdapter {
         
         // Quitter
         if (touche == KeyEvent.VK_ESCAPE) {
-            System.exit(1);
+            System.exit(0);
         }
         
         // Changer les contrôles

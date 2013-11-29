@@ -24,7 +24,7 @@ public class Joueur extends ObjetJeu {
     
     public BufferedImage playerSprite[];
     public int frame = 0;
-    public int timer = 0;
+    public int timer;
     ControlleurObjets controlleur;
     boolean exploding = false;
     
@@ -35,20 +35,17 @@ public class Joueur extends ObjetJeu {
         super(x, y, id);
         setImg();
         this.controlleur = controlleur;
+        timer = 0;
     }
 
     @Override
-    @SuppressWarnings("empty-statement")
     public void tick(LinkedList<ObjetJeu> objets) {
         if(++timer >= 3){
-                ++frame;
-            if (exploding && frame == 3){
-                controlleur.enleverObjet(this);
-            }
-            
+            frame++;
             timer = 0;
         }
-        if(frame >= 4 || exploding == false) frame = 0;
+        if(frame >= 4 && exploding == false) frame = 0;
+        else if (exploding && frame == 3) controlleur.enleverObjet(this);
         
         if (velX != 0 || velY != 0) {
             delta = (float) Math.sqrt(velX * velX + velY * velY);
@@ -80,14 +77,30 @@ public class Joueur extends ObjetJeu {
                     x = temp.getX() - (L);
                     velX = 0;
                 }
-            }
-            else if (temp.getId() == IdObjet.Pointeur) {
+            } else if (temp.getId() == IdObjet.Pointeur) {
                 
                 if (contact().intersects(temp.contact()) &&
                         Jeu.ctrl == IdCtrl.SOURIS) {
                     
                     velX = 0;
                     velY = 0;
+                }
+            } else if (temp.getId() == IdObjet.TirEnnemi) {
+                if (contactHaut().intersects(temp.contact())) {
+                    detruireJoueur();
+                    controlleur.enleverObjet(temp);
+                }
+                if (contactBas().intersects(temp.contact())) {
+                    detruireJoueur();
+                    controlleur.enleverObjet(temp);
+                }
+                if (contactGauche().intersects(temp.contact())) {
+                    detruireJoueur();
+                    controlleur.enleverObjet(temp);
+                }
+                if (contactDroite().intersects(temp.contact())) {
+                    detruireJoueur();
+                    controlleur.enleverObjet(temp);
                 }
                 
             }
@@ -112,12 +125,14 @@ public class Joueur extends ObjetJeu {
     @Override
     public final void setImg() {
         BufferedImage playerImg;
+        playerSprite = new BufferedImage[4];
         try {
             playerImg = ImageIO.read(new File("res/player.png"));
         } catch (IOException e) {
             playerImg = null;
         }
-        playerSprite = splitImage(playerImg, 4, 2);
+        BufferedImage temp[] = splitImage(playerImg, 4, 2);
+        System.arraycopy(temp, 4, playerSprite, 0, 4);
         
         this.img = playerSprite[frame];
     }
@@ -167,6 +182,7 @@ public class Joueur extends ObjetJeu {
         playerSprite = splitImage(playerImg, 4, 1);
         
         exploding = true;
+        TirJoueur.disableGun();
         frame = 0;
     }
 }

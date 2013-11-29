@@ -27,6 +27,7 @@ public class Ennemi extends ObjetJeu {
     public BufferedImage[] enemySprite;
     public int frame = 0;
     public int timer = 0;
+    public int ready;
     ControlleurObjets controlleur;
     
 
@@ -34,7 +35,7 @@ public class Ennemi extends ObjetJeu {
         super(x, -25, id);
         setImg();
         this.controlleur = controlleur;
-        System.out.println("Ennemi crée");
+        ready = 0;
     }
 
     @Override
@@ -45,6 +46,9 @@ public class Ennemi extends ObjetJeu {
         }
         if (frame >= 4) {
             frame -= 4;
+        }
+        if(ready > 0){
+            --ready;
         }
         y += V;
         gererCollision(objets);
@@ -112,6 +116,12 @@ public class Ennemi extends ObjetJeu {
                     joueur.detruireJoueur();
                     controlleur.enleverObjet(this);
                 }
+                 if (getX() + 50f >= joueur.getX() && getX() - 50f 
+                         <= joueur.getX() && ready == 0) {
+                        controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
+                            getY() + 50f, IdObjet.TirEnnemi));
+                        ready = 15;
+                    }
             }
         }
     }

@@ -9,5 +9,6 @@ public enum IdObjet {
     Frontiere(),
     Pointeur(),
     TirNormal(),
+    TirEnnemi(),
     Ennemi();
 }

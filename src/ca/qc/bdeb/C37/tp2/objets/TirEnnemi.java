@@ -18,12 +18,12 @@ import javax.imageio.ImageIO;
  *
  * @author Danmasta97
  */
-public class TirJoueur extends ObjetJeu{
+public class TirEnnemi extends ObjetJeu{
     
     public final static int L = 13, H = 22, V = 12;
     private static int ready = 0;
 
-    public TirJoueur(float x, float y, IdObjet id) {
+    public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
         ready = 15;
@@ -31,7 +31,7 @@ public class TirJoueur extends ObjetJeu{
 
     @Override
     public void tick(LinkedList<ObjetJeu> objets) {
-        y -= V;
+        y += V;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TirJoueur extends ObjetJeu{
 
     @Override
     public void setImg() {
-        File file = new File("res/playerNormalPew.png");
+        File file = new File("res/baddyPew.png");
         Image img;
         try {
             img = ImageIO.read(file);
@@ -62,9 +62,5 @@ public class TirJoueur extends ObjetJeu{
     
     public static void decrementerReady(){
         if(ready > 0) ready--;
-    }
-    
-    public static void disableGun(){
-        ready = -1;
     }
 }
