@@ -77,9 +77,9 @@ public class Jeu extends Canvas implements Runnable {
         }
         
 
-        addKeyListener(new CtrlClavier(controlleur));
+        addKeyListener(new CtrlClavier(controlleur, this));
 
-        CtrlSouris souris = new CtrlSouris(controlleur);
+        CtrlSouris souris = new CtrlSouris(controlleur, this);
         addMouseMotionListener(souris);
         addMouseListener(souris);
 
