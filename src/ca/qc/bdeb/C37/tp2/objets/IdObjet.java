@@ -8,5 +8,6 @@ public enum IdObjet {
     Joueur(),
     Frontiere(),
     Pointeur(),
-    TirNormal();
+    TirNormal(),
+    Ennemi();
 }

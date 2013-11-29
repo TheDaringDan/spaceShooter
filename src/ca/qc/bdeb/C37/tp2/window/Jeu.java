@@ -7,14 +7,15 @@ import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
- * 
+ *
  * @author jerome
  */
 public class Jeu extends Canvas implements Runnable {
-    
+
     /**
      * État du jeu
      */
@@ -23,7 +24,7 @@ public class Jeu extends Canvas implements Runnable {
      * Thread du jeu
      */
     private Thread thread;
-    
+
     /**
      * Choix de contrôles
      */
@@ -34,7 +35,7 @@ public class Jeu extends Canvas implements Runnable {
      * Objets
      */
     ControlleurObjets controlleur;
-    
+
     /**
      * Image de fond
      */
@@ -50,29 +51,40 @@ public class Jeu extends Canvas implements Runnable {
      * Innitialisation du jeu
      */
     private void init() {
-        
+
         ctrl = IdCtrl.CLAVIER;
-        
+
         setFond();
-        
+
+        Random rand = new Random();
+
         controlleur = new ControlleurObjets();
-        
+
         // Limites de déplacement
         controlleur.dessinerFrontieres();
-        
+
         // Ajouter le joueur
         controlleur.ajouterObjet(new Joueur(Vue.L/2-25, Vue.H*3/4,
                 controlleur, this, IdObjet.Joueur));
         
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
+
+        // Ajoute 5 ennemis (test)
+        for (int i = 0; i < 5; i++) {
+            controlleur.ajouterObjet(new Ennemi(rand.nextFloat() * 
+                    (Vue.L - 50f) + 25f, controlleur, IdObjet.Ennemi));
+        }
         
-        addKeyListener(new CtrlClavier(controlleur, this));
-        
-        addMouseMotionListener(new CtrlSouris(controlleur, this));
-        
+
+        addKeyListener(new CtrlClavier(controlleur));
+
+        CtrlSouris souris = new CtrlSouris(controlleur);
+        addMouseMotionListener(souris);
+        addMouseListener(souris);
+
     }
-    
+
     /**
      * Démarage de la partie
      */
@@ -104,14 +116,14 @@ public class Jeu extends Canvas implements Runnable {
     }
 
     /**
-     * Game Loop
-     * Source : http://www.mediafire.com/download/in0truhx4fzoerf/game_loop.txt
+     * Game Loop Source :
+     * http://www.mediafire.com/download/in0truhx4fzoerf/game_loop.txt
      */
     @Override
     public void run() {
         init();
         requestFocus();
-        
+
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -145,16 +157,16 @@ public class Jeu extends Canvas implements Runnable {
             }
         }
     }
-    
+
     /**
-     * 
+     *
      */
     private void tick() {
         controlleur.tick();
     }
-    
+
     /**
-     * 
+     *
      */
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
@@ -162,34 +174,34 @@ public class Jeu extends Canvas implements Runnable {
             this.createBufferStrategy(3);
             return;
         }
-        
+
         Graphics g = bs.getDrawGraphics();
         // ***Début affichage***
         g.drawImage(fond, 0, 0, null);
-        
+
         controlleur.render(g);
-        
+
         // ***Fin affichage*****
         g.dispose();
         bs.show();
     }
-    
+
     /**
-     * 
+     *
      */
     public void setFond() {
         File fichier;
         Image image;
-        
+
         fichier = new File("res/8bitBackground.bmp");
-        
+
         try {
             image = ImageIO.read(fichier);
-            
+
             this.fond = image;
         } catch (IOException ex) {
             System.out.println("Erreur : Image non-chargée.");
         }
     }
-    
+
 }
