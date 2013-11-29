@@ -25,7 +25,7 @@ public class Joueur extends ObjetJeu {
     public BufferedImage playerSprite[];
     public int frame = 0;
     public int timer = 0;
-    private Jeu jeu;
+    private final Jeu jeu;
     
     ControlleurObjets controlleur;
     boolean exploding = false;
