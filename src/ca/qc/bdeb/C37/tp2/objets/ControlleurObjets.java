@@ -27,9 +27,14 @@ public class ControlleurObjets {
             objetTemp = objets.get(i);
             
             objetTemp.tick(objets);
+            
+        
             if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.y < 0) {
                 enleverObjet(objetTemp);
-            } else if (objetTemp.getId() == IdObjet.Ennemi && objetTemp.y > Vue.H) {
+            }
+            else if
+                (objetTemp.getId() == IdObjet.Ennemi && objetTemp.y > Vue.H) {
+                
                 objets.get(i).y = 20;
             }
             
@@ -38,6 +43,7 @@ public class ControlleurObjets {
                
             }
         }
+        
         if (!TirJoueur.isReady()) {
             TirJoueur.decrementerReady();
         }

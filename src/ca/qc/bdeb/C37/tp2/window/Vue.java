@@ -1,9 +1,9 @@
 package ca.qc.bdeb.C37.tp2.window;
 
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
+//import java.awt.Point;
+//import java.awt.Toolkit;
+//import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 /**
@@ -26,17 +26,20 @@ public class Vue {
         
         Jeu jeu = new Jeu();
         
-        BufferedImage curseur =
-                new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Dimension dimension = new Dimension(L, H);
         
-        jeu.setPreferredSize(new Dimension(L, H));
-        jeu.setMaximumSize(new Dimension(L, H));
-        jeu.setMinimumSize(new Dimension(L, H));
+//        BufferedImage curseur =
+//                new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        
+        jeu.setPreferredSize(dimension);
+        jeu.setMaximumSize(dimension);
+        jeu.setMinimumSize(dimension);
         
         JFrame frame = new JFrame(titre);
+        
         frame.add(jeu);
-        frame.getContentPane().setCursor(Toolkit.getDefaultToolkit()
-                .createCustomCursor(curseur, new Point(0, 0), "blank"));
+//        frame.getContentPane().setCursor(Toolkit.getDefaultToolkit()
+//                .createCustomCursor(curseur, new Point(0, 0), "blank"));
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -44,6 +47,7 @@ public class Vue {
         frame.setVisible(true);
         
         jeu.start();
+        
     }
     
 }

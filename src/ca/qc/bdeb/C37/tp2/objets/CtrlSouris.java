@@ -14,10 +14,13 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
 
     ControlleurObjets controlleur;
 
-    public CtrlSouris(ControlleurObjets controlleur) {
+    Jeu jeu;
+    
+    public CtrlSouris (ControlleurObjets controlleur, Jeu jeu) {
         this.controlleur = controlleur;
+        this.jeu = jeu;
     }
-
+    
     @Override
     public void mouseDragged(MouseEvent e) {
         mouseMoved(e);
@@ -26,23 +29,27 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
     @Override
     public void mouseMoved(MouseEvent e) {
         ObjetJeu temp;
-
+        
         for (int i = 0; i < controlleur.objets.size(); i++) {
             temp = controlleur.objets.get(i);
 
-            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
 
+            if (temp.id == IdObjet.Joueur && jeu.ctrl == IdCtrl.SOURIS) {
+                
                 if (e.getX() > 8 && e.getX() < Vue.L - 8) {
-                    temp.setVelY(e.getY() - (temp.getY() + Joueur.H / 2));
-                } else {
+                    temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
+                }
+                else {
                     temp.setVelY(0);
                 }
-                if (e.getY() > Vue.H / 2 && e.getX() < Vue.H - 15) {
-                    temp.setVelX(e.getX() - (temp.getX() + Joueur.L / 2));
-                } else {
+                if (e.getY() > Vue.H/2 && e.getX() < Vue.H - 15) {
+                    temp.setVelX(e.getX() - (temp.getX() + Joueur.L/2));
+                }
+                else {
                     temp.setVelX(0);
                 }
-            } else if (temp.id == IdObjet.Pointeur) {
+            }
+            else if (temp.id == IdObjet.Pointeur) {
                 temp.setX(e.getX());
                 temp.setY(e.getY());
             }
@@ -56,16 +63,19 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         ObjetJeu temp;
-
+         
         for (int i = 0; i < controlleur.objets.size(); i++) {
             temp = controlleur.objets.get(i);
 
-            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
+            if (temp.id == IdObjet.Joueur && jeu.ctrl == IdCtrl.SOURIS) {
                 if (TirJoueur.isReady()) {
                     controlleur.ajouterObjet(new TirJoueur(
                             (int) temp.getX() + (Joueur.L / 2 - TirJoueur.L / 2),
                             (int) temp.getY(), IdObjet.TirNormal));
                 }
+                
+                controlleur.ajouterObjet(new TirJoueur((int)temp.getX(), 
+                                (int)temp.getY(), IdObjet.TirNormal));
             }
         }
     }
@@ -81,5 +91,5 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
+    
 }

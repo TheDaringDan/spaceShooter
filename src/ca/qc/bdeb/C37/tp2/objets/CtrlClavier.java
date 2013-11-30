@@ -11,9 +11,11 @@ import java.awt.event.KeyEvent;
 public class CtrlClavier extends KeyAdapter {
     
     ControlleurObjets controlleur;
+    Jeu jeu;
     
-    public CtrlClavier (ControlleurObjets controlleur) {
+    public CtrlClavier (ControlleurObjets controlleur, Jeu jeu) {
         this.controlleur = controlleur;
+        this.jeu = jeu;
     }
     
     @Override
@@ -21,7 +23,7 @@ public class CtrlClavier extends KeyAdapter {
         int touche = e.getKeyCode();
         ObjetJeu temp;
         
-        if (Jeu.ctrl == IdCtrl.CLAVIER) {
+        if (jeu.ctrl == IdCtrl.CLAVIER) {
             for (int i = 0; i < controlleur.objets.size(); i++) {
 
                 temp = controlleur.objets.get(i);
@@ -52,6 +54,15 @@ public class CtrlClavier extends KeyAdapter {
             }
         }
         
+        if (touche == KeyEvent.VK_P) {
+            if (!jeu.paused) {
+                jeu.pause();
+            }
+            else {
+                jeu.resume();
+            }
+        }
+        
         // Quitter
         if (touche == KeyEvent.VK_ESCAPE) {
             System.exit(0);
@@ -59,11 +70,11 @@ public class CtrlClavier extends KeyAdapter {
         
         // Changer les contrôles
         if (touche == KeyEvent.VK_C) {
-            if (Jeu.ctrl == IdCtrl.CLAVIER) {
-                Jeu.ctrl = IdCtrl.SOURIS;
+            if (jeu.ctrl == IdCtrl.CLAVIER) {
+                jeu.ctrl = IdCtrl.SOURIS;
             }
-            else if (Jeu.ctrl == IdCtrl.SOURIS) {
-                Jeu.ctrl = IdCtrl.CLAVIER;
+            else if (jeu.ctrl == IdCtrl.SOURIS) {
+                jeu.ctrl = IdCtrl.CLAVIER;
             }
         }
     }
