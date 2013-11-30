@@ -28,12 +28,14 @@ public class Joueur extends ObjetJeu {
     ControlleurObjets controlleur;
     boolean exploding = false;
     
+    private final Jeu jeu;
     // Facteurs pour calculer la vitesse diagonale
     float delta;
 
-    public Joueur(float x, float y, ControlleurObjets controlleur, IdObjet id) {
+    public Joueur(float x, float y, ControlleurObjets controlleur, Jeu jeu, IdObjet id) {
         super(x, y, id);
         setImg();
+        this.jeu = jeu;
         this.controlleur = controlleur;
         timer = 0;
     }
@@ -160,16 +162,6 @@ public class Joueur extends ObjetJeu {
 
     public Rectangle contactGauche() {
         return new Rectangle((int)x, (int)y + 10, 8, H - 20);
-    }
-    
-    @Override
-    public float getX(){
-        return x;
-    }
-    
-    @Override
-    public float getY(){
-        return y;
     }
     
     public void detruireJoueur(){
