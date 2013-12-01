@@ -9,14 +9,11 @@ import java.awt.Graphics2D;
  */
 public class Stats {
     
-    Jeu jeu;
-    
     float x, y;
     
-    public Stats(float x, float y, Jeu jeu) {
+    public Stats(float x, float y) {
         this.x = x;
         this.y = y;
-        this.jeu = jeu;
     }
     
     public void render(Graphics g) {
@@ -27,7 +24,7 @@ public class Stats {
     
     @Override
     public String toString() {
-        return "Niveau: " + jeu.getNiveau() + " Score: " + jeu.getScore() +
-                " Vie: " + jeu.getVie();
+        return "Niveau: " + Jeu.getNiveau() + " Score: " + Jeu.getScore() +
+                " Vie: " + Jeu.getVie();
     }
 }

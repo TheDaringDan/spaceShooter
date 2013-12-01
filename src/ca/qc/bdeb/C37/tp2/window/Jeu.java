@@ -64,6 +64,10 @@ public class Jeu extends Canvas implements Runnable {
      * Innitialisation du jeu
      */
     private void init() {
+        
+        Jeu.niveau = 1;
+        Jeu.vie = 100;
+        Jeu.score = 0;
 
         ctrl = IdCtrl.CLAVIER;
 
@@ -83,7 +87,7 @@ public class Jeu extends Canvas implements Runnable {
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
 
-        // Ajoute des ennemis (test)
+        // Ajoute des ennemis
         controlleur.spawnMobs();
         
 
@@ -93,7 +97,7 @@ public class Jeu extends Canvas implements Runnable {
         addMouseMotionListener(souris);
         addMouseListener(souris);
 
-        stats = new Stats(0, 15, this);
+        stats = new Stats(0, 15);
     }
 
     /**
@@ -220,7 +224,7 @@ public class Jeu extends Canvas implements Runnable {
      * 
      * @return 
      */
-    public int getNiveau() {
+    public static int getNiveau() {
         return niveau;
     }
 
@@ -228,7 +232,7 @@ public class Jeu extends Canvas implements Runnable {
      * 
      * @return 
      */
-    public int getVie() {
+    public static int getVie() {
         return vie;
     }
 
@@ -236,8 +240,24 @@ public class Jeu extends Canvas implements Runnable {
      * 
      * @return 
      */
-    public int getScore() {
+    public static int getScore() {
         return score;
+    }
+
+    public static void monterNiveau() {
+        Jeu.niveau++;
+    }
+
+    public static void gagnerVie(int vie) {
+        Jeu.vie += vie;
+    }
+    
+    public static void perdreVie(int vie) {
+        Jeu.vie -= vie;
+    }
+
+    public static void incrementerScore(int score) {
+        Jeu.score += score;
     }
     
     

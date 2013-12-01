@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
  */
 public class TirEnnemi extends ObjetJeu{
     
-    public final static int L = 13, H = 22, V = 12;
+    public final static int L = 13, H = 22, V = 8;
     private static int ready = 0;
 
     public TirEnnemi(float x, float y, IdObjet id) {
