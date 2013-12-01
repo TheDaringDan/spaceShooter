@@ -104,7 +104,7 @@ public class Ennemi extends ObjetJeu {
                     controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
                         getY() + 50f, IdObjet.TirEnnemi));
                     
-                    ready = CADENCE - Jeu.getNiveau() * 2;
+                    ready = CADENCE;
                         
                 }
             }

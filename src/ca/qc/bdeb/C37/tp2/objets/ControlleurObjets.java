@@ -59,7 +59,7 @@ public class ControlleurObjets {
             this.ajouterObjet(new Ennemi(rand.nextFloat() * 
                     (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
             --mobsToSpawn;
-            timer = rand.nextInt(230);
+            timer = rand.nextInt(150) + 100 / Jeu.getNiveau();
         }
         
         --timer;
