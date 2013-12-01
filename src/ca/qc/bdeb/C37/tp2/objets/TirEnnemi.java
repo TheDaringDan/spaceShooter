@@ -21,12 +21,10 @@ import javax.imageio.ImageIO;
 public class TirEnnemi extends ObjetJeu{
     
     public final static int L = 13, H = 22, V = 8;
-    private static int ready = 0;
 
     public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
-        ready = 15;
     }
 
     @Override
@@ -54,13 +52,5 @@ public class TirEnnemi extends ObjetJeu{
             img = null;
         }
         this.img = img;
-    }
-    
-    public static boolean isReady(){
-        return ready == 0;
-    }
-    
-    public static void decrementerReady(){
-        if(ready > 0) ready--;
     }
 }

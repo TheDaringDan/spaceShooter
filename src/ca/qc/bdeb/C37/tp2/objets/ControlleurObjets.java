@@ -59,7 +59,7 @@ public class ControlleurObjets {
             this.ajouterObjet(new Ennemi(rand.nextFloat() * 
                     (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
             --mobsToSpawn;
-            timer = rand.nextInt(300);
+            timer = rand.nextInt(230);
         }
         
         --timer;
@@ -78,7 +78,7 @@ public class ControlleurObjets {
     
     public void enleverObjet(ObjetJeu objet) {
         if (objet.getId() == IdObjet.Ennemi) {
-            Jeu.incrementerScore(10);
+            Jeu.incrementerScore(10 + Jeu.getNiveau());
         }
         this.objets.remove(objet);
     }
