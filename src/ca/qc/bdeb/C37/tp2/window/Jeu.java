@@ -15,11 +15,19 @@ import javax.imageio.ImageIO;
  * @author jerome
  */
 public class Jeu extends Canvas implements Runnable {
+    
+    public final int NIVEAU_MAX = 5;
 
     /**
      * État du jeu
      */
     public boolean running = false, paused = false;
+    
+    /**
+     * Stats du jeu
+     */
+    private static int niveau, vie, score;
+    
     /**
      * Thread du jeu
      */
@@ -48,6 +56,11 @@ public class Jeu extends Canvas implements Runnable {
     public static Menu menu;
     
     /**
+     * 
+     */
+    private Stats stats;
+    
+    /**
      * Innitialisation du jeu
      */
     private void init() {
@@ -65,7 +78,7 @@ public class Jeu extends Canvas implements Runnable {
 
         // Ajouter le joueur
         controlleur.ajouterObjet(new Joueur((float)Vue.L/2-25, (float)Vue.H*3/4,
-                controlleur, IdObjet.Joueur));
+                controlleur, this, IdObjet.Joueur));
         
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
@@ -80,6 +93,7 @@ public class Jeu extends Canvas implements Runnable {
         addMouseMotionListener(souris);
         addMouseListener(souris);
 
+        stats = new Stats(0, 15, this);
     }
 
     /**
@@ -177,6 +191,7 @@ public class Jeu extends Canvas implements Runnable {
         g.drawImage(fond, 0, 0, null);
 
         controlleur.render(g);
+        stats.render(g);
 
         // ***Fin affichage*****
         g.dispose();
@@ -200,5 +215,31 @@ public class Jeu extends Canvas implements Runnable {
             System.out.println("Erreur : Image non-chargée.");
         }
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getNiveau() {
+        return niveau;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getVie() {
+        return vie;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getScore() {
+        return score;
+    }
+    
+    
 
 }

@@ -45,8 +45,8 @@ public class Menu extends JFrame implements ActionListener {
         this.pack();
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setResizable(false);
-        this.setLocationRelativeTo(jeu);
         this.setLocation(50, 100);
+        this.setLocationRelativeTo(jeu);
         this.setVisible(true);
         
     }
