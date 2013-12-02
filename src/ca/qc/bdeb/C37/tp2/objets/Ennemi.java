@@ -6,23 +6,24 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
 import static ca.qc.bdeb.C37.tp2.Vue2.splitImage;
-import ca.qc.bdeb.C37.tp2.window.Vue;
+import ca.qc.bdeb.C37.tp2.window.Jeu;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Random;
 import javax.imageio.ImageIO;
 
 /**
  *
- * @author Danmasta97
+ * @author Danmasta97, jerome
  */
 public class Ennemi extends ObjetJeu {
 
     public static final int L = 50, H = 55, V = 4;
+    
+    private final int CADENCE = 50;
 
     public BufferedImage[] enemySprite;
     public int frame = 0;
@@ -77,69 +78,37 @@ public class Ennemi extends ObjetJeu {
 
         this.img = enemySprite[frame];
     }
+    
+    /**
+     * 
+     * @param objets 
+     */
     private void gererCollision(LinkedList<ObjetJeu> objets) {
         for (int i = 0; i < objets.size(); i++) {
             ObjetJeu temp = objets.get(i);
             
             if (temp.getId() == IdObjet.TirNormal) {
-                if (contactHaut().intersects(temp.contact())) {
-                    controlleur.enleverObjet(temp);
-                    controlleur.enleverObjet(this);
-                }
-                if (contactBas().intersects(temp.contact())) {
-                    controlleur.enleverObjet(temp);
-                    controlleur.enleverObjet(this);
-                }
-                if (contactGauche().intersects(temp.contact())) {
-                    controlleur.enleverObjet(temp);
-                    controlleur.enleverObjet(this);
-                }
-                if (contactDroite().intersects(temp.contact())) {
+                if (contact().intersects(temp.contact())) {
                     controlleur.enleverObjet(temp);
                     controlleur.enleverObjet(this);
                 }
             } else if (temp.id == IdObjet.Joueur){
                 Joueur joueur = (Joueur) temp;
-                if (contactHaut().intersects(temp.contact())) {
+                if (contact().intersects(temp.contact())) {
                     joueur.detruireJoueur();
                     controlleur.enleverObjet(this);
                 }
-                if (contactBas().intersects(temp.contact())) {
-                    joueur.detruireJoueur();
-                    controlleur.enleverObjet(this);
-                }
-                if (contactGauche().intersects(temp.contact())) {
-                    joueur.detruireJoueur();
-                    controlleur.enleverObjet(this);
-                }
-                if (contactDroite().intersects(temp.contact())) {
-                    joueur.detruireJoueur();
-                    controlleur.enleverObjet(this);
-                }
-                 if (getX() + 50f >= joueur.getX() && getX() - 50f 
+                if (getX() + 50f >= joueur.getX() && getX() - 50f 
                          <= joueur.getX() && ready == 0) {
-                        controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
-                            getY() + 50f, IdObjet.TirEnnemi));
-                        ready = 35;
-                    }
+                     
+                    controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
+                        getY() + 50f, IdObjet.TirEnnemi));
+                    
+                    ready = CADENCE;
+                        
+                }
             }
         }
-    }
-    
-    public Rectangle contactHaut() {
-        return new Rectangle((int)x + 20, (int)y + 5, L - 40, H/2 - 5);
-    }
-
-    public Rectangle contactBas() {
-        return new Rectangle((int)x + 20, (int)y + H/2 + 5, L - 40, H/2 - 5);
-    }
-
-    public Rectangle contactDroite() {
-        return new Rectangle((int)x + L - 8, (int)y + 10, 8, H - 20);
-    }
-
-    public Rectangle contactGauche() {
-        return new Rectangle((int)x, (int)y + 10, 8, H - 20);
     }
 }
 

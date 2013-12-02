@@ -15,11 +15,19 @@ import javax.imageio.ImageIO;
  * @author jerome
  */
 public class Jeu extends Canvas implements Runnable {
+    
+    public final int NIVEAU_MAX = 5;
 
     /**
      * État du jeu
      */
     public boolean running = false, paused = false;
+    
+    /**
+     * Stats du jeu
+     */
+    private static int niveau, vie, score;
+    
     /**
      * Thread du jeu
      */
@@ -48,9 +56,18 @@ public class Jeu extends Canvas implements Runnable {
     public static Menu menu;
     
     /**
+     * 
+     */
+    private Stats stats;
+    
+    /**
      * Innitialisation du jeu
      */
     private void init() {
+        
+        Jeu.niveau = 1;
+        Jeu.vie = 100;
+        Jeu.score = 0;
 
         ctrl = IdCtrl.CLAVIER;
 
@@ -65,12 +82,12 @@ public class Jeu extends Canvas implements Runnable {
 
         // Ajouter le joueur
         controlleur.ajouterObjet(new Joueur((float)Vue.L/2-25, (float)Vue.H*3/4,
-                controlleur, IdObjet.Joueur));
+                controlleur, this, IdObjet.Joueur));
         
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
 
-        // Ajoute des ennemis (test)
+        // Ajoute des ennemis
         controlleur.spawnMobs();
         
 
@@ -80,6 +97,7 @@ public class Jeu extends Canvas implements Runnable {
         addMouseMotionListener(souris);
         addMouseListener(souris);
 
+        stats = new Stats(0, 15);
     }
 
     /**
@@ -177,6 +195,7 @@ public class Jeu extends Canvas implements Runnable {
         g.drawImage(fond, 0, 0, null);
 
         controlleur.render(g);
+        stats.render(g);
 
         // ***Fin affichage*****
         g.dispose();
@@ -200,5 +219,47 @@ public class Jeu extends Canvas implements Runnable {
             System.out.println("Erreur : Image non-chargée.");
         }
     }
+
+    /**
+     * 
+     * @return 
+     */
+    public static int getNiveau() {
+        return niveau;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public static int getVie() {
+        return vie;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public static int getScore() {
+        return score;
+    }
+
+    public static void monterNiveau() {
+        Jeu.niveau++;
+    }
+
+    public static void gagnerVie(int vie) {
+        Jeu.vie += vie;
+    }
+    
+    public static void perdreVie(int vie) {
+        Jeu.vie -= vie;
+    }
+
+    public static void incrementerScore(int score) {
+        Jeu.score += score;
+    }
+    
+    
 
 }

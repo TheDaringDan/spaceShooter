@@ -31,11 +31,14 @@ public class Joueur extends ObjetJeu {
     // Facteurs pour calculer la vitesse diagonale
     float delta;
 
-    public Joueur(float x, float y, ControlleurObjets controlleur, IdObjet id) {
+    public Joueur(float x, float y, ControlleurObjets controlleur,
+            Jeu jeu, IdObjet id) {
+        
         super(x, y, id);
         setImg();
         this.controlleur = controlleur;
         timer = 0;
+        
     }
 
     @Override
