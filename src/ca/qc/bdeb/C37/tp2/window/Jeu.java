@@ -36,7 +36,7 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * Choix de contrôles
      */
-    public static IdCtrl ctrl;
+    private IdCtrl ctrl;
     private IdCtrl memCtrl;
     
     /**
@@ -259,7 +259,21 @@ public class Jeu extends Canvas implements Runnable {
     public static void incrementerScore(int score) {
         Jeu.score += score;
     }
+
+    public IdCtrl getMemCtrl() {
+        return memCtrl;
+    }
+
+    public void setMemCtrl(IdCtrl memCtrl) {
+        this.memCtrl = memCtrl;
+    }
     
-    
+    public IdCtrl getCtrl() {
+        return memCtrl;
+    }
+
+    public void setCtrl(IdCtrl ctrl) {
+        this.ctrl = ctrl;
+    }
 
 }

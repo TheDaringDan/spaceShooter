@@ -23,7 +23,7 @@ public class CtrlClavier extends KeyAdapter {
         int touche = e.getKeyCode();
         ObjetJeu temp;
         
-        if (jeu.ctrl == IdCtrl.CLAVIER) {
+        if (jeu.getCtrl() == IdCtrl.CLAVIER) {
             for (int i = 0; i < controlleur.objets.size(); i++) {
 
                 temp = controlleur.objets.get(i);
@@ -70,11 +70,11 @@ public class CtrlClavier extends KeyAdapter {
         
         // Changer les contrôles
         if (touche == KeyEvent.VK_C) {
-            if (jeu.ctrl == IdCtrl.CLAVIER) {
-                jeu.ctrl = IdCtrl.SOURIS;
+            if (jeu.getCtrl() == IdCtrl.CLAVIER) {
+                jeu.setCtrl(IdCtrl.SOURIS);
             }
-            else if (jeu.ctrl == IdCtrl.SOURIS) {
-                jeu.ctrl = IdCtrl.CLAVIER;
+            else if (jeu.getCtrl() == IdCtrl.SOURIS) {
+                jeu.setCtrl(IdCtrl.CLAVIER);
             }
         }
     }

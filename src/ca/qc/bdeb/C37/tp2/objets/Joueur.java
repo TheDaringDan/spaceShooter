@@ -85,7 +85,7 @@ public class Joueur extends ObjetJeu {
             } else if (temp.getId() == IdObjet.Pointeur) {
                 
                 if (contact().intersects(temp.contact()) &&
-                        Jeu.ctrl == IdCtrl.SOURIS) {
+                        jeu.getCtrl() == IdCtrl.SOURIS) {
                     
                     velX = 0;
                     velY = 0;
