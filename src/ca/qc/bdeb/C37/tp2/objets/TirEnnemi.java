@@ -26,7 +26,7 @@ public class TirEnnemi extends ObjetJeu{
     public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
-        ready = 15;
+        ready = 25;
     }
 
     @Override

@@ -120,7 +120,7 @@ public class Ennemi extends ObjetJeu {
                          <= joueur.getX() && ready == 0) {
                         controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
                             getY() + 50f, IdObjet.TirEnnemi));
-                        ready = 15;
+                        ready = 35;
                     }
             }
         }
