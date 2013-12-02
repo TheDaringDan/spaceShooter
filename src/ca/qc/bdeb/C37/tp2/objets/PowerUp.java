@@ -5,8 +5,13 @@ import ca.qc.bdeb.C37.tp2.window.Vue;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -15,8 +20,11 @@ import java.util.LinkedList;
 public class PowerUp extends ObjetJeu {
     
     public static final int H = 40, L = 40, V = 6;
+    private Image[] powerUpTypes = new BufferedImage[3];
+    
     public PowerUp(float x, float y, IdObjet id) {
         super(x, y, id);
+        setImg();
     }
 
     @Override
@@ -32,19 +40,19 @@ public class PowerUp extends ObjetJeu {
 
     @Override
     public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        
+        //Graphics2D g2d = (Graphics2D) g;
         if (this.id == IdObjet.PowerUpBleu) {
-            g.setColor(Color.blue);
+            img = powerUpTypes[0];
         }
         if (this.id == IdObjet.PowerUpVert) {
-            g.setColor(Color.green);
+            img = powerUpTypes[1];
         }
         if (this.id == IdObjet.PowerUpRouge) {
-            g.setColor(Color.red);
+            img = powerUpTypes[2];
         }
         
-        g2d.draw(contact());
+        g.drawImage(img, (int)x, (int)y, 38, 38, null);
+        //g2d.draw(contact());
     }
     
     private void gererCollision(LinkedList<ObjetJeu> objets) {
@@ -68,18 +76,7 @@ public class PowerUp extends ObjetJeu {
                     }
                     
                     objets.remove(this);
-                
-                    detruireEnnemis(objets);
-                    
                 }
-            }
-        }
-    }
-    
-    private void detruireEnnemis(LinkedList<ObjetJeu> objets) {
-        for (int i = 0; i < objets.size(); i++) {
-            if (objets.get(i).getId() == IdObjet.Ennemi) {
-                objets.remove(i);
             }
         }
     }
@@ -91,6 +88,30 @@ public class PowerUp extends ObjetJeu {
 
     @Override
     public void setImg() {
+        File file = new File("res/pUp_H.png");
+        Image img;
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            img = null;
+        }
+        this.powerUpTypes[0] = img;
+        
+        file = new File("res/pUp_S.png");
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            img = null;
+        }
+        this.powerUpTypes[1] = img;
+        
+        file = new File("res/pUp_W.png");
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            img = null;
+        }
+        this.powerUpTypes[2] = img;
     }
     
 }

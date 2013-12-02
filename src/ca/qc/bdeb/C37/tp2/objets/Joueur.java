@@ -1,7 +1,7 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import static ca.qc.bdeb.C37.tp2.Vue2.splitImage;
 import ca.qc.bdeb.C37.tp2.window.Jeu;
+import static ca.qc.bdeb.C37.tp2.window.Vue.splitImage;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -23,10 +23,14 @@ public class Joueur extends ObjetJeu {
     public static final int L = 50, H = 55, V = 8;
     
     public BufferedImage playerSprite[];
+    public BufferedImage playerDamaged;
     public int frame = 0;
     public int timer;
     ControlleurObjets controlleur;
     boolean exploding = false;
+    int damaged = 0;
+    private final int DEGAT_LASER = 20;
+    private final int DEGAT_COLLISION = 50;
     
     private final Jeu jeu;
     // Facteurs pour calculer la vitesse diagonale
@@ -91,23 +95,16 @@ public class Joueur extends ObjetJeu {
                     velY = 0;
                 }
             } else if (temp.getId() == IdObjet.TirEnnemi) {
-                if (contactHaut().intersects(temp.contact())) {
-                    detruireJoueur();
-                    controlleur.enleverObjet(temp);
-                }
-                if (contactBas().intersects(temp.contact())) {
-                    detruireJoueur();
-                    controlleur.enleverObjet(temp);
-                }
-                if (contactGauche().intersects(temp.contact())) {
-                    detruireJoueur();
-                    controlleur.enleverObjet(temp);
-                }
-                if (contactDroite().intersects(temp.contact())) {
-                    detruireJoueur();
+                if (contact().intersects(temp.contact())) {
+                    endommager(DEGAT_LASER);
                     controlleur.enleverObjet(temp);
                 }
                 
+            } else if (temp.getId() == IdObjet.Ennemi) {
+                if (contact().intersects(temp.contact())) {
+                    endommager(DEGAT_COLLISION);
+                    controlleur.enleverObjet(temp);
+                }
             }
         }
     }
@@ -115,7 +112,12 @@ public class Joueur extends ObjetJeu {
     @Override
     public void render(Graphics g) {
         this.img = playerSprite[frame];
-        
+        if (damaged > 0) {
+            if(damaged % 2 == 0){
+                this.img = playerDamaged;
+            }
+            --damaged;
+        }
         g.drawImage(img, (int)x, (int)y, L, H, null);
         
 //        Graphics2D g2d = (Graphics2D) g;
@@ -138,6 +140,7 @@ public class Joueur extends ObjetJeu {
         }
         BufferedImage temp[] = splitImage(playerImg, 4, 2);
         System.arraycopy(temp, 4, playerSprite, 0, 4);
+        playerDamaged = temp[0];
         
         this.img = playerSprite[frame];
     }
@@ -179,5 +182,14 @@ public class Joueur extends ObjetJeu {
         exploding = true;
         TirJoueur.disableGun();
         frame = 0;
+    }
+    
+    public void endommager(int degats){
+        Jeu.perdreVie(degats);
+        if (Jeu.getVie() <= 0) {
+            detruireJoueur();
+        } else {
+            damaged = 40;
+        }
     }
 }

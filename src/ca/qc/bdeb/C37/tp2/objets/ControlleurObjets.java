@@ -36,6 +36,7 @@ public class ControlleurObjets {
         
             if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.y < 0) {
                 enleverObjet(objetTemp);
+                Jeu.incrementerScore(-2);
             }
             else if (objetTemp.getId() ==
                     IdObjet.Ennemi && objetTemp.y > Vue.H) {
@@ -125,7 +126,7 @@ public class ControlleurObjets {
             this.ajouterObjet(new Ennemi(rand.nextFloat() * 
                     (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
             --mobsToSpawn;
-            mobTimer = rand.nextInt(150) + 100 / Jeu.getNiveau();
+            mobTimer = rand.nextInt(50) + 200 / (Jeu.getNiveau()*2);
         }
         
         --mobTimer;
@@ -139,15 +140,18 @@ public class ControlleurObjets {
         if (!pUpSpawned) {
             if (Jeu.getNiveau() % 5 == 0) {
                 pUpSpawned = true;
-                this.ajouterObjet(new PowerUp(Vue.L/2,0, IdObjet.PowerUpRouge));
+                this.ajouterObjet(new PowerUp(Vue.L/2-20,0,
+                        IdObjet.PowerUpRouge));
             }
             else if (Jeu.getNiveau() % 3 == 0) {
                 pUpSpawned = true;
-                this.ajouterObjet(new PowerUp(Vue.L/2, 0, IdObjet.PowerUpVert));
+                this.ajouterObjet(new PowerUp(Vue.L/2-20, 0,
+                        IdObjet.PowerUpVert));
             }
             else if (Jeu.getNiveau() % 2 == 0) {
                 pUpSpawned = true;
-                this.ajouterObjet(new PowerUp(Vue.L/2, 0, IdObjet.PowerUpBleu));
+                this.ajouterObjet(new PowerUp(Vue.L/2-20, 0,
+                        IdObjet.PowerUpBleu));
             }
         }
     }

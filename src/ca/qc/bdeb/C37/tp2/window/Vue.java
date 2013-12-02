@@ -1,6 +1,10 @@
 package ca.qc.bdeb.C37.tp2.window;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 //import java.awt.Point;
 //import java.awt.Toolkit;
 //import java.awt.image.BufferedImage;
@@ -28,8 +32,8 @@ public class Vue {
         
         Dimension dimension = new Dimension(L, H);
         
-//        BufferedImage curseur =
-//                new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage curseur =
+                new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         
         jeu.setPreferredSize(dimension);
         jeu.setMaximumSize(dimension);
@@ -38,8 +42,8 @@ public class Vue {
         JFrame frame = new JFrame(titre);
         
         frame.add(jeu);
-//        frame.getContentPane().setCursor(Toolkit.getDefaultToolkit()
-//                .createCustomCursor(curseur, new Point(0, 0), "blank"));
+        frame.getContentPane().setCursor(Toolkit.getDefaultToolkit()
+                .createCustomCursor(curseur, new Point(0, 0), "blank"));
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -50,4 +54,36 @@ public class Vue {
         
     }
     
+    public static void restart(){
+        
+    }
+    
+    /**
+     * Classe qui sépare une 'sprite sheet' en tableau d'images Trouvé en ligne
+     * : http://www.javalobby.org/articles/ultimate-image/ dans la section
+     * 'Splitting Images'
+     *
+     * @param img La 'sprite sheet' au complet
+     * @param cols Le nombre de collones dans la 'sprite sheet'
+     * @param rows Le nombre de rangées dans la 'sprite sheet'
+     * @return Un tableau d'images (sprites)
+     */
+    public static BufferedImage[] splitImage(BufferedImage img, int cols,
+            int rows) {
+        int w = img.getWidth() / cols;
+        int h = img.getHeight() / rows;
+        int num = 0;
+        BufferedImage imgs[] = new BufferedImage[w * h];
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
+                imgs[num] = new BufferedImage(w, h, img.getType());
+                // Tell the graphics to draw only one block of the image  
+                Graphics2D g = imgs[num].createGraphics();
+                g.drawImage(img, 0, 0, w, h, w * x, h * y, w * x + w, h * y + h, null);
+                g.dispose();
+                num++;
+            }
+        }
+        return imgs;
+    }
 }

@@ -5,8 +5,7 @@
  */
 package ca.qc.bdeb.C37.tp2.objets;
 
-import static ca.qc.bdeb.C37.tp2.Vue2.splitImage;
-import ca.qc.bdeb.C37.tp2.window.Jeu;
+import static ca.qc.bdeb.C37.tp2.window.Vue.splitImage;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -93,13 +92,8 @@ public class Ennemi extends ObjetJeu {
                     controlleur.enleverObjet(this);
                 }
             } else if (temp.id == IdObjet.Joueur){
-                Joueur joueur = (Joueur) temp;
-                if (contact().intersects(temp.contact())) {
-                    joueur.detruireJoueur();
-                    controlleur.enleverObjet(this);
-                }
-                if (getX() + 50f >= joueur.getX() && getX() - 50f 
-                         <= joueur.getX() && ready == 0) {
+                if (getX() + 50f >= temp.getX() && getX() - 50f 
+                         <= temp.getX() && ready == 0) {
                      
                     controlleur.ajouterObjet(new TirEnnemi(getX() + 20f,
                         getY() + 50f, IdObjet.TirEnnemi));

@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.C37.tp2.objets;
 
+import ca.qc.bdeb.C37.tp2.window.Vue;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -21,6 +22,7 @@ import javax.imageio.ImageIO;
 public class TirEnnemi extends ObjetJeu{
     
     public final static int L = 13, H = 22, V = 8;
+    public int ready = 0;
 
     public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
@@ -31,6 +33,10 @@ public class TirEnnemi extends ObjetJeu{
     @Override
     public void tick(LinkedList<ObjetJeu> objets) {
         y += V;
+        
+        if (y > Vue.H) {
+            objets.remove(this);
+        }
     }
 
     @Override

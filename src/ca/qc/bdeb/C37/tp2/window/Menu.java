@@ -38,7 +38,11 @@ public class Menu extends JFrame implements ActionListener {
         
         panel = new JPanel(new GridLayout(1, 2));
         boutons = new JPanel(new GridLayout(3, 1));
-        ctrls = new JLabel(instrClavier + instr);
+        if (jeu.getMemCtrl() == IdCtrl.CLAVIER) {
+            ctrls = new JLabel(instrClavier + instr);
+        } else if (jeu.getMemCtrl() == IdCtrl.SOURIS) {
+            ctrls = new JLabel(instrSouris + instr);
+        }
         
         creerBouttons();
         

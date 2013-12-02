@@ -114,7 +114,11 @@ public class Jeu extends Canvas implements Runnable {
     }
     
     public void pause() {
-        memCtrl = ctrl;
+        if (ctrl == null) {
+            memCtrl = IdCtrl.CLAVIER;
+        } else {
+            memCtrl = ctrl;
+        }
         ctrl = null;
         paused = true;
         
