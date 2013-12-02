@@ -17,14 +17,18 @@ public class ControlleurObjets {
     private ObjetJeu objetTemp;
     
     private Random rand = new Random();
-    private int mobs;
+    private int conteurMobs;
     private int mobsToSpawn;
-    private int timer = 1;
-    private int ready = 0;
+    private int mobTimer = 1;
+        
+    private boolean pUpSpawned = false;
     
+    /**
+     * 
+     */
     public void tick() {
             
-        mobs = 0;
+        conteurMobs = 0;
         
         for (int i = 0; i < objets.size(); i++) {
             objetTemp = objets.get(i);
@@ -33,15 +37,15 @@ public class ControlleurObjets {
             if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.y < 0) {
                 enleverObjet(objetTemp);
             }
-            else if
-                (objetTemp.getId() == IdObjet.Ennemi && objetTemp.y > Vue.H) {
+            else if (objetTemp.getId() ==
+                    IdObjet.Ennemi && objetTemp.y > Vue.H) {
                 
                 objets.get(i).y = 20;
             }
             if(objetTemp.getId() == IdObjet.Ennemi){
                 Ennemi ennemi = (Ennemi) objetTemp;
                 
-                ++mobs; 
+                ++conteurMobs; 
             }
         }
         
@@ -49,22 +53,16 @@ public class ControlleurObjets {
             TirJoueur.decrementerReady();
         }
         
-        if (mobsToSpawn <= 0 && mobs <= 0) {
-            Jeu.monterNiveau();
-            timer = 1;
-            spawnMobs();
-        }
+        gererMobs();
         
-        if(mobsToSpawn > 0 && timer <= 0){
-            this.ajouterObjet(new Ennemi(rand.nextFloat() * 
-                    (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
-            --mobsToSpawn;
-            timer = rand.nextInt(150) + 100 / Jeu.getNiveau();
-        }
+        spawnPowerUps();
         
-        --timer;
     }
     
+    /**
+     * 
+     * @param g 
+     */
     public void render(Graphics g) {
         for (int i = 0; i < objets.size(); i++) {
             objetTemp = objets.get(i);
@@ -72,10 +70,18 @@ public class ControlleurObjets {
         }
     }
     
+    /**
+     * 
+     * @param objet 
+     */
     public void ajouterObjet(ObjetJeu objet) {
         this.objets.add(objet);
     }
     
+    /**
+     * 
+     * @param objet 
+     */
     public void enleverObjet(ObjetJeu objet) {
         if (objet.getId() == IdObjet.Ennemi) {
             Jeu.incrementerScore(10 + Jeu.getNiveau());
@@ -83,6 +89,9 @@ public class ControlleurObjets {
         this.objets.remove(objet);
     }
     
+    /**
+     * 
+     */
     public void dessinerFrontieres() {
         // Haut
         ajouterObjet(new Frontiere(0, Vue.H*2/3, this,
@@ -101,7 +110,53 @@ public class ControlleurObjets {
                 IdObjet.Frontiere, 2, Vue.H/3));
     }
     
-    public void spawnMobs(){
-        mobsToSpawn = Jeu.getNiveau() * 3;
+    /**
+     * 
+     */
+    public void gererMobs(){
+        
+        if (mobsToSpawn <= 0 && conteurMobs <= 0) {
+            monterNiveau();
+            mobTimer = 1;
+            mobsToSpawn = Jeu.getNiveau() * 3;
+        }
+        
+        if(mobsToSpawn > 0 && mobTimer <= 0){
+            this.ajouterObjet(new Ennemi(rand.nextFloat() * 
+                    (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
+            --mobsToSpawn;
+            mobTimer = rand.nextInt(150) + 100 / Jeu.getNiveau();
+        }
+        
+        --mobTimer;
     }
-}
+    
+    /**
+     * 
+     */
+    public void spawnPowerUps() {
+        
+        if (!pUpSpawned) {
+            if (Jeu.getNiveau() % 5 == 0) {
+                pUpSpawned = true;
+                this.ajouterObjet(new PowerUp(Vue.L/2,0, IdObjet.PowerUpRouge));
+            }
+            else if (Jeu.getNiveau() % 3 == 0) {
+                pUpSpawned = true;
+                this.ajouterObjet(new PowerUp(Vue.L/2, 0, IdObjet.PowerUpVert));
+            }
+            else if (Jeu.getNiveau() % 2 == 0) {
+                pUpSpawned = true;
+                this.ajouterObjet(new PowerUp(Vue.L/2, 0, IdObjet.PowerUpBleu));
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void monterNiveau() {
+        Jeu.monterNiveau();
+        pUpSpawned = false;
+    }
+} 

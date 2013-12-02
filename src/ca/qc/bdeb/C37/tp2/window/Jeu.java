@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  */
 public class Jeu extends Canvas implements Runnable {
     
-    public final int NIVEAU_MAX = 5;
+    public final int NIVEAU_MAX = 10;
 
     /**
      * État du jeu
@@ -36,7 +36,7 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * Choix de contrôles
      */
-    public static IdCtrl ctrl;
+    private IdCtrl ctrl;
     private IdCtrl memCtrl;
     
     /**
@@ -65,7 +65,7 @@ public class Jeu extends Canvas implements Runnable {
      */
     private void init() {
         
-        Jeu.niveau = 1;
+        Jeu.niveau = 0;
         Jeu.vie = 100;
         Jeu.score = 0;
 
@@ -88,7 +88,7 @@ public class Jeu extends Canvas implements Runnable {
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
 
         // Ajoute des ennemis
-        controlleur.spawnMobs();
+        controlleur.gererMobs();
         
 
         addKeyListener(new CtrlClavier(controlleur, this));
@@ -259,7 +259,21 @@ public class Jeu extends Canvas implements Runnable {
     public static void incrementerScore(int score) {
         Jeu.score += score;
     }
+
+    public IdCtrl getMemCtrl() {
+        return memCtrl;
+    }
+
+    public void setMemCtrl(IdCtrl memCtrl) {
+        this.memCtrl = memCtrl;
+    }
     
-    
+    public IdCtrl getCtrl() {
+        return memCtrl;
+    }
+
+    public void setCtrl(IdCtrl ctrl) {
+        this.ctrl = ctrl;
+    }
 
 }

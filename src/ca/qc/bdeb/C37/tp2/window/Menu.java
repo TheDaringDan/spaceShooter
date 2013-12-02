@@ -3,11 +3,12 @@ package ca.qc.bdeb.C37.tp2.window;
 import ca.qc.bdeb.C37.tp2.objets.IdCtrl;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -16,18 +17,28 @@ import javax.swing.JPanel;
  */
 public class Menu extends JFrame implements ActionListener {
     
-    public static int L = 300, H = 150;
+    public static int L = 300, H = 200;
     
-    private final JPanel panel;
-    private JButton play, quitter, ctrls;
+    private final JPanel panel, boutons;
+    private JButton play, quitter, chCtrls;
+    private JLabel ctrls;
     private final Jeu jeu;
+    
+    private final String instrClavier = "<html>Mouvement :<br/>flêches<br/>"
+            + "<br/>Tir :<br/>espace",
+            instrSouris = "<html>Mouvement :<br/>souris<br/>"
+            + "<br/>Tir :<br/>clic gauche",
+            instr = "<br/><br/>Contrôles :<br/>'c'<br/>"
+            + "<br/>Pause :<br/>'p'</html>";
     
     public Menu(Jeu jeu) {
         this.jeu = jeu;
         
         Dimension dimension = new Dimension(L, H);
         
-        panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panel = new JPanel(new GridLayout(1, 2));
+        boutons = new JPanel(new GridLayout(3, 1));
+        ctrls = new JLabel(instrClavier + instr);
         
         creerBouttons();
         
@@ -35,10 +46,16 @@ public class Menu extends JFrame implements ActionListener {
         panel.setMaximumSize(dimension);
         panel.setMinimumSize(dimension);
         
-        panel.setBackground(Color.blue);
-        panel.add(play);
+        boutons.setPreferredSize(new Dimension(L/2, H));
+        ctrls.setHorizontalAlignment(JLabel.CENTER);
+        
+        boutons.add(play);
+        boutons.add(chCtrls);
+        boutons.add(quitter);
+        
+        panel.setBackground(Color.black);
+        panel.add(boutons);
         panel.add(ctrls);
-        panel.add(quitter);
         
         this.add(panel);
         
@@ -57,11 +74,11 @@ public class Menu extends JFrame implements ActionListener {
     private void creerBouttons() {
         play = new JButton("Play");
         quitter = new JButton("Quitter");
-        ctrls = new JButton("Contrôles");
+        chCtrls = new JButton("Contrôles");
         
         play.addActionListener(this);
         quitter.addActionListener(this);
-        ctrls.addActionListener(this);
+        chCtrls.addActionListener(this);
     }
 
     @Override
@@ -69,6 +86,16 @@ public class Menu extends JFrame implements ActionListener {
         Object source = e.getSource();
         if (source == play) {
             jeu.resume();
+        }
+        else if (source == chCtrls) {
+            if (jeu.getMemCtrl() == IdCtrl.SOURIS) {
+                jeu.setMemCtrl(IdCtrl.CLAVIER);
+                ctrls.setText(instrClavier + instr);
+            }
+            else {
+                jeu.setMemCtrl(IdCtrl.SOURIS);
+                ctrls.setText(instrSouris + instr);
+            }
         }
         else if (source == quitter) {
             System.exit(1);

@@ -34,7 +34,7 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
             temp = controlleur.objets.get(i);
 
 
-            if (temp.id == IdObjet.Joueur && jeu.ctrl == IdCtrl.SOURIS) {
+            if (temp.id == IdObjet.Joueur && jeu.getCtrl() == IdCtrl.SOURIS) {
                 
                 if (e.getX() > 8 && e.getX() < Vue.L - 8) {
                     temp.setVelY(e.getY() - (temp.getY() + Joueur.H/2));
@@ -67,7 +67,7 @@ public class CtrlSouris implements MouseMotionListener, MouseListener {
         for (int i = 0; i < controlleur.objets.size(); i++) {
             temp = controlleur.objets.get(i);
 
-            if (temp.id == IdObjet.Joueur && Jeu.ctrl == IdCtrl.SOURIS) {
+            if (temp.id == IdObjet.Joueur && jeu.getCtrl() == IdCtrl.SOURIS) {
                 if (TirJoueur.isReady()) {
                     
                     controlleur.ajouterObjet(new TirJoueur(

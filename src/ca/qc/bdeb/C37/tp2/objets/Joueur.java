@@ -28,6 +28,7 @@ public class Joueur extends ObjetJeu {
     ControlleurObjets controlleur;
     boolean exploding = false;
     
+    private final Jeu jeu;
     // Facteurs pour calculer la vitesse diagonale
     float delta;
 
@@ -36,6 +37,7 @@ public class Joueur extends ObjetJeu {
         
         super(x, y, id);
         setImg();
+        this.jeu = jeu;
         this.controlleur = controlleur;
         timer = 0;
         
@@ -83,7 +85,7 @@ public class Joueur extends ObjetJeu {
             } else if (temp.getId() == IdObjet.Pointeur) {
                 
                 if (contact().intersects(temp.contact()) &&
-                        Jeu.ctrl == IdCtrl.SOURIS) {
+                        jeu.getCtrl() == IdCtrl.SOURIS) {
                     
                     velX = 0;
                     velY = 0;
