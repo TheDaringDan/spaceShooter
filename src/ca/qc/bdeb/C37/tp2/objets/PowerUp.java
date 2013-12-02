@@ -23,7 +23,11 @@ public class PowerUp extends ObjetJeu {
     public void tick(LinkedList<ObjetJeu> objets) {
         this.y += V;
         
+        if (this.y > Vue.H) {
+            objets.remove(this);
+        }
         
+        gererCollision(objets);
     }
 
     @Override
@@ -48,28 +52,34 @@ public class PowerUp extends ObjetJeu {
             ObjetJeu temp = objets.get(i);
             
             if (temp.getId() == IdObjet.Joueur) {
-                if (this.id == IdObjet.PowerUpBleu) {
-                    Jeu.incrementerScore(10);
-                    Jeu.gagnerVie(10);
-                }
-                if (this.id == IdObjet.PowerUpVert) {
-                    Jeu.incrementerScore(30);
-                    Jeu.gagnerVie(20);
-                }
-                if (this.id == IdObjet.PowerUpRouge) {
-                    Jeu.incrementerScore(50);
-                    Jeu.gagnerVie(30);
-                }
+                if (contact().intersects(temp.contact())) {
+                    
+                    if (this.id == IdObjet.PowerUpBleu) {
+                        Jeu.incrementerScore(20);
+                        Jeu.gagnerVie(10);
+                    }
+                    if (this.id == IdObjet.PowerUpVert) {
+                        Jeu.incrementerScore(40);
+                        Jeu.gagnerVie(20);
+                    }
+                    if (this.id == IdObjet.PowerUpRouge) {
+                        Jeu.incrementerScore(60);
+                        Jeu.gagnerVie(30);
+                    }
+                    
+                    objets.remove(this);
                 
-                detruireEnnemis(objets);
+                    detruireEnnemis(objets);
+                    
+                }
             }
         }
     }
     
     private void detruireEnnemis(LinkedList<ObjetJeu> objets) {
-        for (int j = 0; j < objets.size(); j++) {
-            if (objets.get(j).getId() == IdObjet.Ennemi) {
-                objets.remove(j);
+        for (int i = 0; i < objets.size(); i++) {
+            if (objets.get(i).getId() == IdObjet.Ennemi) {
+                objets.remove(i);
             }
         }
     }
