@@ -53,8 +53,12 @@ public class Joueur extends ObjetJeu {
             frame++;
             timer = 0;
         }
-        if(frame >= 4 && exploding == false) frame = 0;
-        else if (exploding && frame == 3) controlleur.enleverObjet(this);
+        if(frame >= 4 && exploding == false) {
+            frame = 0;
+        }
+        else if (exploding && frame == 3) {
+            jeu.gameOver();
+        }
         
         if (velX != 0 || velY != 0) {
             delta = (float) Math.sqrt(velX * velX + velY * velY);

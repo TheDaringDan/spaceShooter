@@ -69,6 +69,8 @@ public class Menu extends JFrame implements ActionListener {
         this.setLocation(50, 100);
         this.setLocationRelativeTo(jeu);
         this.setVisible(true);
+        this.setAlwaysOnTop(true);
+        this.requestFocus();
         
     }
     
