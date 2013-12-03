@@ -20,7 +20,7 @@ public class Menu extends JFrame implements ActionListener {
     public static int L = 300, H = 200;
     
     private final JPanel panel, boutons;
-    private JButton play, quitter, chCtrls;
+    private JButton play, quitter, chCtrls, top;
     private JLabel ctrls;
     private final Jeu jeu;
     
@@ -37,7 +37,7 @@ public class Menu extends JFrame implements ActionListener {
         Dimension dimension = new Dimension(L, H);
         
         panel = new JPanel(new GridLayout(1, 2));
-        boutons = new JPanel(new GridLayout(3, 1));
+        boutons = new JPanel(new GridLayout(4, 1));
         if (jeu.getMemCtrl() == IdCtrl.CLAVIER) {
             ctrls = new JLabel(instrClavier + instr);
         } else if (jeu.getMemCtrl() == IdCtrl.SOURIS) {
@@ -55,6 +55,7 @@ public class Menu extends JFrame implements ActionListener {
         
         boutons.add(play);
         boutons.add(chCtrls);
+        boutons.add(top);
         boutons.add(quitter);
         
         panel.setBackground(Color.black);
@@ -81,10 +82,12 @@ public class Menu extends JFrame implements ActionListener {
         play = new JButton("Play");
         quitter = new JButton("Quitter");
         chCtrls = new JButton("Contrôles");
+        top = new JButton("Top Scores");
         
         play.addActionListener(this);
         quitter.addActionListener(this);
         chCtrls.addActionListener(this);
+        top.addActionListener(this);
     }
 
     @Override
@@ -104,7 +107,10 @@ public class Menu extends JFrame implements ActionListener {
             }
         }
         else if (source == quitter) {
-            System.exit(1);
+            System.exit(0);
+        }
+        else if (source == top) {
+            ScoreBoard scores = new ScoreBoard();
         }
     }
 }

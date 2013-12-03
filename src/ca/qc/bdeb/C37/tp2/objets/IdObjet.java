@@ -10,7 +10,8 @@ public enum IdObjet {
     Pointeur(),
     TirNormal(),
     TirEnnemi(),
-    Ennemi(),
+    EnnemiNormal(),
+    EnnemiZigZag(),
     PowerUpBleu(),
     PowerUpVert(),
     PowerUpRouge();

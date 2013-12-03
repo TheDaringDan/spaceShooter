@@ -19,20 +19,22 @@ import javax.imageio.ImageIO;
  *
  * @author Danmasta97, jerome
  */
-public class Ennemi extends ObjetJeu {
+public class EnnemiZigZag extends ObjetJeu {
 
     public static final int L = 50, H = 55, V = 4;
+    
+    private int velX = 3;
     
     private final int CADENCE = 50;
 
     public BufferedImage[] enemySprite;
-    public int frame = 0;
+    public int frame = 4;
     public int timer = 0;
     public int ready;
     ControlleurObjets controlleur;
     
 
-    public Ennemi(float x, ControlleurObjets controlleur, IdObjet id) {
+    public EnnemiZigZag(float x, ControlleurObjets controlleur, IdObjet id) {
         super(x, -25, id);
         setImg();
         this.controlleur = controlleur;
@@ -45,13 +47,14 @@ public class Ennemi extends ObjetJeu {
             ++frame;
             timer = 0;
         }
-        if (frame >= 4) {
+        if (frame >= 8) {
             frame -= 4;
         }
         if(ready > 0){
             --ready;
         }
         y += V;
+        x += velX;
         gererCollision(objets);
     }
 
@@ -101,6 +104,10 @@ public class Ennemi extends ObjetJeu {
                     
                     ready = CADENCE;
                         
+                }
+                
+                if (getX() <= 0 || getX() >= Vue.L - L) {
+                    velX = -velX;
                 }
             }
         }

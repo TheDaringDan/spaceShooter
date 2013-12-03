@@ -54,7 +54,7 @@ public class Jeu extends Canvas implements Runnable {
      */
     private Menu menu;
     
-    private EcranGameOver ecranFin;
+    private GameOver ecranFin;
 
     /**
      *
@@ -144,7 +144,7 @@ public class Jeu extends Canvas implements Runnable {
         ctrl = null;
         paused = true;
 
-        ecranFin = new EcranGameOver(this, score);
+        ecranFin = new GameOver(this, score);
     }
 
     /**
@@ -280,7 +280,7 @@ public class Jeu extends Canvas implements Runnable {
     }
 
     public IdCtrl getCtrl() {
-        return memCtrl;
+        return ctrl;
     }
 
     public void setMemCtrl(IdCtrl memCtrl) {

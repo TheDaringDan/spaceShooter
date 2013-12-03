@@ -104,7 +104,7 @@ public class Joueur extends ObjetJeu {
                     controlleur.enleverObjet(temp);
                 }
                 
-            } else if (temp.getId() == IdObjet.Ennemi) {
+            } else if (temp.getId() == IdObjet.EnnemiNormal) {
                 if (contact().intersects(temp.contact())) {
                     endommager(DEGAT_COLLISION);
                     controlleur.enleverObjet(temp);

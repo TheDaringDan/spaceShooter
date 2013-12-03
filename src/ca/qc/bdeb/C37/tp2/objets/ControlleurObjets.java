@@ -39,12 +39,11 @@ public class ControlleurObjets {
                 Jeu.incrementerScore(-2);
             }
             else if (objetTemp.getId() ==
-                    IdObjet.Ennemi && objetTemp.y > Vue.H) {
+                    IdObjet.EnnemiNormal && objetTemp.y > Vue.H) {
                 
                 objets.get(i).y = 20;
             }
-            if(objetTemp.getId() == IdObjet.Ennemi){
-                Ennemi ennemi = (Ennemi) objetTemp;
+            if(objetTemp.getId() == IdObjet.EnnemiNormal){
                 
                 ++conteurMobs; 
             }
@@ -84,8 +83,11 @@ public class ControlleurObjets {
      * @param objet 
      */
     public void enleverObjet(ObjetJeu objet) {
-        if (objet.getId() == IdObjet.Ennemi) {
+        if (objet.getId() == IdObjet.EnnemiNormal) {
             Jeu.incrementerScore(10 + Jeu.getNiveau());
+        }
+        else if (objet.getId() == IdObjet.EnnemiZigZag) {
+            Jeu.incrementerScore(10 + Jeu.getNiveau() * 5 / 3);
         }
         this.objets.remove(objet);
     }
@@ -118,15 +120,20 @@ public class ControlleurObjets {
         
         if (mobsToSpawn <= 0 && conteurMobs <= 0) {
             monterNiveau();
-            mobTimer = 1;
+            mobTimer = 200;
             mobsToSpawn = Jeu.getNiveau() * 3;
         }
         
         if(mobsToSpawn > 0 && mobTimer <= 0){
-            this.ajouterObjet(new Ennemi(rand.nextFloat() * 
-                    (Vue.L - 50f) + 25f, this, IdObjet.Ennemi));
+            if (mobsToSpawn % 5 == 0) {
+                this.ajouterObjet(new EnnemiZigZag(rand.nextFloat() * 
+                    (Vue.L - 50f), this, IdObjet.EnnemiZigZag));
+            } else {
+                this.ajouterObjet(new Ennemi(rand.nextFloat() * 
+                    (Vue.L - 50f), this, IdObjet.EnnemiNormal));
+            }
             --mobsToSpawn;
-            mobTimer = rand.nextInt(50) + 200 / (Jeu.getNiveau()*2);
+            mobTimer = rand.nextInt(80) + 200 / (Jeu.getNiveau()); 
         }
         
         --mobTimer;
