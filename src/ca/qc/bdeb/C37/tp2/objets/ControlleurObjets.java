@@ -17,7 +17,7 @@ public class ControlleurObjets {
     private ObjetJeu temp;
     
     private final Random rand = new Random();
-    private int compteurMobs, compteurLaser;
+    private int compteurMobs;
     private int mobsToSpawn;
     private int mobTimer = 1;
         
@@ -29,7 +29,6 @@ public class ControlleurObjets {
     public void tick() {
             
         compteurMobs = 0;
-        compteurLaser = 0;
         
         for (int i = 0; i < objets.size(); i++) {
             temp = objets.get(i);
@@ -38,14 +37,6 @@ public class ControlleurObjets {
             if(temp.getId() == IdObjet.EnnemiNormal){
                 ++compteurMobs; 
             }
-            
-            if (temp.getId() == IdObjet.TirNormal) {
-                ++compteurLaser;
-            }
-        }
-        
-        if (compteurLaser <= 0) {
-            TirJoueur.reset();
         }
         
         if (!TirJoueur.isReady()) {
@@ -168,5 +159,13 @@ public class ControlleurObjets {
     private void monterNiveau() {
         Jeu.monterNiveau();
         pUpSpawned = false;
+    }
+    
+    /**
+     * 
+     */
+    public void reset() {
+        objets.clear();
+        TirJoueur.reset();
     }
 } 

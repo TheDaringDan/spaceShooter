@@ -136,7 +136,7 @@ public class Jeu extends Canvas implements Runnable {
     }
     
     public void gameOver() {
-        
+        controlleur.reset();
         ctrl = null;
         paused = true;
 
