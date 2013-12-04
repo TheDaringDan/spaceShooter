@@ -17,6 +17,7 @@ public class Pointeur extends ObjetJeu {
 
     public Pointeur(float x, float y, IdObjet id) {
         super(x, y, id);
+        setImg();
     }
 
     @Override

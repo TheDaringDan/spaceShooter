@@ -11,7 +11,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 /**
@@ -21,7 +20,7 @@ import javax.imageio.ImageIO;
 public class TirJoueur extends ObjetJeu{
     
     public final static int L = 13, H = 22, V = 12;
-    private static int ready = 0;
+    private static int ready;
 
     public TirJoueur(float x, float y, IdObjet id) {
         super(x, y, id);
@@ -68,7 +67,7 @@ public class TirJoueur extends ObjetJeu{
         if(ready > 0) ready--;
     }
     
-    public static void disableGun(){
-        ready = -1;
+    public static void reset() {
+        ready = 0;
     }
 }

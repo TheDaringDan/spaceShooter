@@ -204,7 +204,6 @@ public class Joueur extends ObjetJeu {
         playerSprite = splitImage(playerImg, 4, 1);
         
         exploding = true;
-        TirJoueur.disableGun();
         frame = 0;
     }
     

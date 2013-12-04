@@ -14,10 +14,10 @@ public class ControlleurObjets {
     
     public LinkedList<ObjetJeu> objets = new LinkedList<>();
     
-    private ObjetJeu objetTemp;
+    private ObjetJeu temp;
     
-    private Random rand = new Random();
-    private int conteurMobs;
+    private final Random rand = new Random();
+    private int compteurMobs, compteurLaser;
     private int mobsToSpawn;
     private int mobTimer = 1;
         
@@ -28,16 +28,24 @@ public class ControlleurObjets {
      */
     public void tick() {
             
-        conteurMobs = 0;
+        compteurMobs = 0;
+        compteurLaser = 0;
         
         for (int i = 0; i < objets.size(); i++) {
-            objetTemp = objets.get(i);
-            objetTemp.tick(this);
+            temp = objets.get(i);
+            temp.tick(this);
             
-            if(objetTemp.getId() == IdObjet.EnnemiNormal){
-                
-                ++conteurMobs; 
+            if(temp.getId() == IdObjet.EnnemiNormal){
+                ++compteurMobs; 
             }
+            
+            if (temp.getId() == IdObjet.TirNormal) {
+                ++compteurLaser;
+            }
+        }
+        
+        if (compteurLaser <= 0) {
+            TirJoueur.reset();
         }
         
         if (!TirJoueur.isReady()) {
@@ -56,8 +64,8 @@ public class ControlleurObjets {
      */
     public void render(Graphics g) {
         for (int i = 0; i < objets.size(); i++) {
-            objetTemp = objets.get(i);
-            objetTemp.render(g);
+            temp = objets.get(i);
+            temp.render(g);
         }
     }
     
@@ -109,10 +117,10 @@ public class ControlleurObjets {
      */
     public void gererMobs(){
         
-        if (mobsToSpawn <= 0 && conteurMobs <= 0) {
+        if (mobsToSpawn <= 0 && compteurMobs <= 0) {
             monterNiveau();
             mobTimer = 200;
-            mobsToSpawn = Jeu.getNiveau() * 3;
+            mobsToSpawn = Jeu.getNiveau() * 3 / 2 + 3;
         }
         
         if(mobsToSpawn > 0 && mobTimer <= 0){
