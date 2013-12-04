@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 /**
@@ -26,7 +25,6 @@ public class Joueur extends ObjetJeu {
     public BufferedImage playerDamaged;
     public int frame = 0;
     public int timer;
-    ControlleurObjets controlleur;
     boolean exploding = false;
     int damaged = 0;
     private final int DEGAT_LASER = 20;
@@ -36,19 +34,17 @@ public class Joueur extends ObjetJeu {
     // Facteurs pour calculer la vitesse diagonale
     float delta;
 
-    public Joueur(float x, float y, ControlleurObjets controlleur,
-            Jeu jeu, IdObjet id) {
+    public Joueur(float x, float y, Jeu jeu, IdObjet id) {
         
         super(x, y, id);
         setImg();
         this.jeu = jeu;
-        this.controlleur = controlleur;
         timer = 0;
         
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
         if(++timer >= 3){
             frame++;
             timer = 0;
@@ -66,12 +62,12 @@ public class Joueur extends ObjetJeu {
             y += Joueur.V * velY/delta;
         }
         
-        gererCollision(objets);
+        gererCollision(controlleur);
     }
     
-    private void gererCollision(LinkedList<ObjetJeu> objets) {
-        for (int i = 0; i < objets.size(); i++) {
-            ObjetJeu temp = objets.get(i);
+    private void gererCollision(ControlleurObjets controlleur) {
+        for (int i = 0; i < controlleur.objets.size(); i++) {
+            ObjetJeu temp = controlleur.objets.get(i);
             
             if (temp.getId() == IdObjet.Frontiere) {
                 if (contactHaut().intersects(temp.contact())) {

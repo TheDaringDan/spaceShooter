@@ -2,9 +2,9 @@ package ca.qc.bdeb.C37.tp2.objets;
 
 import ca.qc.bdeb.C37.tp2.window.Jeu;
 import ca.qc.bdeb.C37.tp2.window.Vue;
-import java.awt.Color;
+//import java.awt.Color;
+//import java.awt.Graphics2D;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -28,14 +28,14 @@ public class PowerUp extends ObjetJeu {
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
         this.y += V;
         
         if (this.y > Vue.H) {
-            objets.remove(this);
+            controlleur.enleverObjet(this);
         }
         
-        gererCollision(objets);
+        gererCollision(controlleur);
     }
 
     @Override
@@ -55,9 +55,9 @@ public class PowerUp extends ObjetJeu {
         //g2d.draw(contact());
     }
     
-    private void gererCollision(LinkedList<ObjetJeu> objets) {
-        for (int i = 0; i < objets.size(); i++) {
-            ObjetJeu temp = objets.get(i);
+    private void gererCollision(ControlleurObjets controlleur) {
+        for (int i = 0; i < controlleur.objets.size(); i++) {
+            ObjetJeu temp = controlleur.objets.get(i);
             
             if (temp.getId() == IdObjet.Joueur) {
                 if (contact().intersects(temp.contact())) {
@@ -75,7 +75,7 @@ public class PowerUp extends ObjetJeu {
                         Jeu.gagnerVie(30);
                     }
                     
-                    objets.remove(this);
+                    controlleur.enleverObjet(this);
                 }
             }
         }

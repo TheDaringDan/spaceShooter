@@ -2,8 +2,10 @@ package ca.qc.bdeb.C37.tp2.window;
 
 import java.awt.Dimension;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,6 +82,54 @@ public class ScoreBoard extends JFrame {
         }
         finally {
             br.close();
+        }
+    }
+    
+    public static void enregistrerScore(int score)
+            throws FileNotFoundException, IOException {
+        
+        BufferedReader br = new BufferedReader(new FileReader("data/sb.txt"));
+        int[] tabScores = new int[10];
+        try {
+            int temp;
+            int temp2;
+            String ligne = br.readLine();
+
+            for (int i = 0; i < 10 && ligne != null; i++) {
+                tabScores[i] = Integer.parseInt(ligne);
+                ligne = br.readLine();
+            }
+            
+            temp = tabScores[0];
+            
+            for (int i = 0; i < tabScores.length; i++) {
+                if (score > tabScores[i]) {
+                    temp = tabScores[i];
+                    tabScores[i] = score;
+                    score = 0;
+                }
+                else if (score == 0) {
+                    temp2 = tabScores[i];
+                    tabScores[i] = temp;
+                    temp = temp2;
+                }
+            }
+            
+        }
+        finally {
+            br.close();
+        }
+        
+        BufferedWriter bw = new BufferedWriter(new FileWriter("data/sb.txt"));
+        try {
+            String ligne;
+            for (int i = 0; i < tabScores.length; i++) {
+                ligne = tabScores[i] + "\n";
+                bw.write(ligne);
+            }
+        }
+        finally {
+            bw.close();
         }
     }
     

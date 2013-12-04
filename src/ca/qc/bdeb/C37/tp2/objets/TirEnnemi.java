@@ -31,11 +31,11 @@ public class TirEnnemi extends ObjetJeu{
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
         y += V;
         
         if (y > Vue.H) {
-            objets.remove(this);
+            controlleur.enleverObjet(this);
         }
     }
 

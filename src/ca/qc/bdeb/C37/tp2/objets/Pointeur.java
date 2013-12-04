@@ -17,7 +17,7 @@ public class Pointeur extends ObjetJeu {
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
     }
 
     @Override

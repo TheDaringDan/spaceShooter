@@ -5,14 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,9 +17,9 @@ import javax.swing.JPanel;
  */
 public class GameOver extends JFrame implements ActionListener {
 
-    private final int L = 200, H = 60;
+    private final int L = 200, H = 90;
     
-    private int score;
+    private final int score;
     
     private final Jeu jeu;
     
@@ -34,14 +27,14 @@ public class GameOver extends JFrame implements ActionListener {
     
     private final JLabel message;
     
-    private final JButton quitter;
+    private JButton quitter, top;
     
     public GameOver(Jeu jeu, int score) {
         this.jeu = jeu;
         this.score = score;
         
         try {
-            enregistrerScore();
+            ScoreBoard.enregistrerScore(score);
         } catch (IOException ex) {
             System.out.println("Erreur de lecture du fichier.");
         }
@@ -53,8 +46,7 @@ public class GameOver extends JFrame implements ActionListener {
                 "</html>");
         message.setHorizontalAlignment(JLabel.CENTER);
         
-        quitter = new JButton("Quitter");
-        quitter.addActionListener(this);
+        creerBoutons();
         
         panel.setPreferredSize(dimension);
         panel.setMaximumSize(dimension);
@@ -63,6 +55,7 @@ public class GameOver extends JFrame implements ActionListener {
         panel.setBackground(Color.black);
         
         panel.add(message, BorderLayout.NORTH);
+        panel.add(top, BorderLayout.CENTER);
         panel.add(quitter, BorderLayout.SOUTH);
         
         this.add(panel);
@@ -77,58 +70,24 @@ public class GameOver extends JFrame implements ActionListener {
         this.requestFocus();
     }
     
+    private void creerBoutons() {
+        top = new JButton("Top Scores");
+        top.addActionListener(this);
+        
+        quitter = new JButton("Quitter");
+        quitter.addActionListener(this);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == top) {
+            ScoreBoard scores = new ScoreBoard();
+        }
         if (e.getSource() == quitter) {
             System.exit(0);
         }
     }
     
-    private void enregistrerScore() throws FileNotFoundException, IOException {
-        
-        BufferedReader br = new BufferedReader(new FileReader("data/sb.txt"));
-        int[] tabScores = new int[10];
-        try {
-            int temp;
-            int temp2;
-            String ligne = br.readLine();
-
-            for (int i = 0; i < 10 && ligne != null; i++) {
-                tabScores[i] = Integer.parseInt(ligne);
-                ligne = br.readLine();
-            }
-            
-            temp = tabScores[0];
-            
-            for (int i = 0; i < tabScores.length; i++) {
-                if (score > tabScores[i]) {
-                    temp = tabScores[i];
-                    tabScores[i] = score;
-                    score = 0;
-                }
-                else {
-                    temp2 = tabScores[i];
-                    tabScores[i] = temp;
-                    temp = temp2;
-                }
-            }
-            
-        }
-        finally {
-            br.close();
-        }
-        
-        BufferedWriter bw = new BufferedWriter(new FileWriter("data/sb.txt"));
-        try {
-            String ligne;
-            for (int i = 0; i < tabScores.length; i++) {
-                ligne = tabScores[i] + "\n";
-                bw.write(ligne);
-            }
-        }
-        finally {
-            bw.close();
-        }
-    }
+    
     
 }

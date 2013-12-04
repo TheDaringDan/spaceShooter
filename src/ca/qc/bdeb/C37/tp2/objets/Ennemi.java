@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.C37.tp2.objets;
 
 import ca.qc.bdeb.C37.tp2.window.Vue;
@@ -12,7 +7,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import javax.imageio.ImageIO;
 
 /**
@@ -26,21 +20,34 @@ public class Ennemi extends ObjetJeu {
     private final int CADENCE = 50;
 
     public BufferedImage[] enemySprite;
-    public int frame = 0;
-    public int timer = 0;
-    public int ready;
-    ControlleurObjets controlleur;
+    private int frame = 0;
+    private int timer = 0;
+    private int ready;
     
 
-    public Ennemi(float x, ControlleurObjets controlleur, IdObjet id) {
+    public Ennemi(float x, IdObjet id) {
         super(x, -25, id);
         setImg();
-        this.controlleur = controlleur;
         ready = 0;
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
+        if(ready > 0){
+            --ready;
+        }
+        
+        y += V;
+        
+        if (y > Vue.H) {
+            y = -H;
+        }
+        
+        gererCollision(controlleur);
+    }
+
+    @Override
+    public void render(Graphics g) {
         if (++timer >= 3) {
             ++frame;
             timer = 0;
@@ -48,15 +55,6 @@ public class Ennemi extends ObjetJeu {
         if (frame >= 4) {
             frame -= 4;
         }
-        if(ready > 0){
-            --ready;
-        }
-        y += V;
-        gererCollision(objets);
-    }
-
-    @Override
-    public void render(Graphics g) {
         this.img = enemySprite[frame];
         g.drawImage(img, (int) x, (int) y, L, H, null);
     }
@@ -83,9 +81,9 @@ public class Ennemi extends ObjetJeu {
      * 
      * @param objets 
      */
-    private void gererCollision(LinkedList<ObjetJeu> objets) {
-        for (int i = 0; i < objets.size(); i++) {
-            ObjetJeu temp = objets.get(i);
+    private void gererCollision(ControlleurObjets controlleur) {
+        for (int i = 0; i < controlleur.objets.size(); i++) {
+            ObjetJeu temp = controlleur.objets.get(i);
             
             if (temp.getId() == IdObjet.TirNormal) {
                 if (contact().intersects(temp.contact())) {

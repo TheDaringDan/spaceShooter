@@ -32,17 +32,8 @@ public class ControlleurObjets {
         
         for (int i = 0; i < objets.size(); i++) {
             objetTemp = objets.get(i);
-            objetTemp.tick(objets);
-        
-            if (objetTemp.getId() == IdObjet.TirNormal && objetTemp.y < 0) {
-                enleverObjet(objetTemp);
-                Jeu.incrementerScore(-2);
-            }
-            else if (objetTemp.getId() ==
-                    IdObjet.EnnemiNormal && objetTemp.y > Vue.H) {
-                
-                objets.get(i).y = 20;
-            }
+            objetTemp.tick(this);
+            
             if(objetTemp.getId() == IdObjet.EnnemiNormal){
                 
                 ++conteurMobs; 
@@ -87,7 +78,7 @@ public class ControlleurObjets {
             Jeu.incrementerScore(10 + Jeu.getNiveau());
         }
         else if (objet.getId() == IdObjet.EnnemiZigZag) {
-            Jeu.incrementerScore(10 + Jeu.getNiveau() * 5 / 3);
+            Jeu.incrementerScore(10 + Jeu.getNiveau() * 2);
         }
         this.objets.remove(objet);
     }
@@ -127,13 +118,13 @@ public class ControlleurObjets {
         if(mobsToSpawn > 0 && mobTimer <= 0){
             if (mobsToSpawn % 5 == 0) {
                 this.ajouterObjet(new EnnemiZigZag(rand.nextFloat() * 
-                    (Vue.L - 50f), this, IdObjet.EnnemiZigZag));
+                    (Vue.L - 50f), IdObjet.EnnemiZigZag));
             } else {
                 this.ajouterObjet(new Ennemi(rand.nextFloat() * 
-                    (Vue.L - 50f), this, IdObjet.EnnemiNormal));
+                    (Vue.L - 50f), IdObjet.EnnemiNormal));
             }
             --mobsToSpawn;
-            mobTimer = rand.nextInt(80) + 200 / (Jeu.getNiveau()); 
+            mobTimer = rand.nextInt(80) + 150 / (Jeu.getNiveau() * 3 / 2); 
         }
         
         --mobTimer;

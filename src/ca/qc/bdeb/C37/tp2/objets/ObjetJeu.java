@@ -35,7 +35,7 @@ public abstract class ObjetJeu {
         this.id = id;
     }
     
-    public abstract void tick(LinkedList<ObjetJeu> objets);
+    public abstract void tick(ControlleurObjets controlleur);
     
     public abstract void render(Graphics g);
     

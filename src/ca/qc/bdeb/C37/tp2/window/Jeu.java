@@ -83,7 +83,7 @@ public class Jeu extends Canvas implements Runnable {
 
         // Ajouter le joueur
         controlleur.ajouterObjet(new Joueur((float) Vue.L / 2 - 25,
-                (float) Vue.H * 3 / 4, controlleur, this, IdObjet.Joueur));
+                (float) Vue.H * 3 / 4, this, IdObjet.Joueur));
 
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));

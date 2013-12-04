@@ -1,10 +1,9 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import java.awt.Color;
+//import java.awt.Color;
+//import java.awt.Graphics2D;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.LinkedList;
 
 /**
  *
@@ -27,7 +26,7 @@ public class Frontiere extends ObjetJeu {
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
         
     }
 

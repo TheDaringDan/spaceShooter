@@ -26,12 +26,16 @@ public class TirJoueur extends ObjetJeu{
     public TirJoueur(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
-        ready = 15;
+        ready = 10;
     }
 
     @Override
-    public void tick(LinkedList<ObjetJeu> objets) {
+    public void tick(ControlleurObjets controlleur) {
         y -= V;
+        
+        if (y < -H) {
+            controlleur.enleverObjet(this);
+        }
     }
 
     @Override
