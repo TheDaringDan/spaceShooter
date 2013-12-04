@@ -16,8 +16,6 @@ import javax.imageio.ImageIO;
  */
 public class Jeu extends Canvas implements Runnable {
 
-    private Vue vue;
-
     /**
      * État du jeu
      */
@@ -102,14 +100,12 @@ public class Jeu extends Canvas implements Runnable {
 
     /**
      * Démarage de la partie
-     * @param vue
      */
-    public synchronized void start(Vue vue) {
+    public synchronized void start() {
         if (running) {
             return;
         }
-
-        this.vue = vue;
+        
         thread = new Thread(this);
         thread.start();
         running = true;
@@ -146,7 +142,16 @@ public class Jeu extends Canvas implements Runnable {
 
         ecranFin = new GameOver(this, score);
     }
-
+    
+    public void restart() throws Throwable {
+        running = false;
+        finalize();
+        thread = null;
+        
+        System.gc();
+        start();
+    }
+    
     /**
      * Game Loop Source :
      * http://www.mediafire.com/download/in0truhx4fzoerf/game_loop.txt

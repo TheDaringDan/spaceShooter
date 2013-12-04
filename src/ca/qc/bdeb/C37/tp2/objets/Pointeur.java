@@ -1,16 +1,19 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Rectangle;
-import java.util.LinkedList;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author jerome
  */
 public class Pointeur extends ObjetJeu {
+    
+    public final int L = 15, H = 15;
 
     public Pointeur(float x, float y, IdObjet id) {
         super(x, y, id);
@@ -22,18 +25,35 @@ public class Pointeur extends ObjetJeu {
 
     @Override
     public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g.setColor(Color.green);
-        g2d.draw(contact());
+        g.drawImage(img, (int)x, (int)y, L, H, null);
     }
 
     @Override
     public Rectangle contact() {
-        return new Rectangle((int)x, (int)y, 1, 1);
+        return null;
     }
 
     @Override
     public void setImg() {
+        File file = new File("res/curseur.png");
+        Image img;
+        try {
+            img = ImageIO.read(file);
+        } catch (IOException ex) {
+            img = null;
+        }
+        this.img = img;
     }
     
+    @Override
+    public float getX() {
+        return x + L/2;
+        
+    }
+    
+    @Override
+    public float getY() {
+        return y + H/2;
+        
+    }
 }

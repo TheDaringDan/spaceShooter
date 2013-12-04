@@ -1,5 +1,6 @@
 package ca.qc.bdeb.C37.tp2.window;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -17,7 +18,7 @@ public class Stats {
     }
     
     public void render(Graphics g) {
-        
+        g.setColor(Color.orange);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawString(this.toString(), x, y);
     }

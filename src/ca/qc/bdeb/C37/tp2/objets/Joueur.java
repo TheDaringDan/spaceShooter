@@ -69,6 +69,7 @@ public class Joueur extends ObjetJeu {
         for (int i = 0; i < controlleur.objets.size(); i++) {
             ObjetJeu temp = controlleur.objets.get(i);
             
+            // Limites de déplacements
             if (temp.getId() == IdObjet.Frontiere) {
                 if (contactHaut().intersects(temp.contact())) {
                     y = temp.getY() - 5;
@@ -86,21 +87,44 @@ public class Joueur extends ObjetJeu {
                     x = temp.getX() - (L);
                     velX = 0;
                 }
-            } else if (temp.getId() == IdObjet.Pointeur) {
-                
-                if (contact().intersects(temp.contact()) &&
+            }
+            // Contrôles avec la souris -> arrêt au pointeur
+            else if (temp.getId() == IdObjet.Pointeur &&
                         jeu.getCtrl() == IdCtrl.SOURIS) {
-                    
+                
+                if (x + L*4/7 <= temp.getX()) {
+                    velX = 1;
+                }
+                else if (x + L*3/7>= temp.getX()) {
+                    velX = -1;
+                }
+                else {
                     velX = 0;
+                }
+                
+                if (y + H*4/7 <= temp.getY()) {
+                    velY = 1;
+                }
+                else if (y + H*3/7 >= temp.getY()) {
+                    velY = -1;
+                }
+                else {
                     velY = 0;
                 }
-            } else if (temp.getId() == IdObjet.TirEnnemi) {
+                
+            }
+            // Dommages reçus (laser)
+            else if (temp.getId() == IdObjet.TirEnnemi) {
                 if (contact().intersects(temp.contact())) {
                     endommager(DEGAT_LASER);
                     controlleur.enleverObjet(temp);
                 }
                 
-            } else if (temp.getId() == IdObjet.EnnemiNormal) {
+            }
+            // Dommages reçus (collisions)
+            else if (temp.getId() == IdObjet.EnnemiNormal ||
+                    temp.getId() == IdObjet.EnnemiZigZag) {
+                
                 if (contact().intersects(temp.contact())) {
                     endommager(DEGAT_COLLISION);
                     controlleur.enleverObjet(temp);

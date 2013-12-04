@@ -58,12 +58,6 @@ public class Vue {
         
     }
     
-    public final void restartJeu(){
-        jeu.thread.stop();
-        jeu = null;
-        startJeu();
-    }
-    
     public final void startJeu() {
         jeu = new Jeu();
         
@@ -71,7 +65,7 @@ public class Vue {
         jeu.setMaximumSize(dimension);
         jeu.setMinimumSize(dimension);
         
-        jeu.start(this);
+        jeu.start();
     }
     
     /**

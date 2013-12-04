@@ -3,9 +3,12 @@ package ca.qc.bdeb.C37.tp2.window;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +20,7 @@ import javax.swing.JPanel;
  */
 public class GameOver extends JFrame implements ActionListener {
 
-    private final int L = 200, H = 90;
+    private final int L = 200, H = 120;
     
     private final int score;
     
@@ -27,7 +30,7 @@ public class GameOver extends JFrame implements ActionListener {
     
     private final JLabel message;
     
-    private JButton quitter, top;
+    private JButton quitter, top, restart;
     
     public GameOver(Jeu jeu, int score) {
         this.jeu = jeu;
@@ -41,7 +44,7 @@ public class GameOver extends JFrame implements ActionListener {
         
         Dimension dimension = new Dimension(L, H);
         
-        panel = new JPanel(new BorderLayout(0, 5));
+        panel = new JPanel(new GridLayout(4, 1));
         message = new JLabel("<html>Game Over...<br/>Score: " + score +
                 "</html>");
         message.setHorizontalAlignment(JLabel.CENTER);
@@ -54,9 +57,10 @@ public class GameOver extends JFrame implements ActionListener {
         
         panel.setBackground(Color.black);
         
-        panel.add(message, BorderLayout.NORTH);
-        panel.add(top, BorderLayout.CENTER);
-        panel.add(quitter, BorderLayout.SOUTH);
+        panel.add(message);
+        panel.add(top);
+        panel.add(restart);
+        panel.add(quitter);
         
         this.add(panel);
         
@@ -74,16 +78,29 @@ public class GameOver extends JFrame implements ActionListener {
         top = new JButton("Top Scores");
         top.addActionListener(this);
         
+        restart = new JButton("Recommencer");
+        restart.addActionListener(this);
+        
         quitter = new JButton("Quitter");
         quitter.addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == top) {
+        Object source = e.getSource();
+        
+        if (source == top) {
             ScoreBoard scores = new ScoreBoard();
         }
-        if (e.getSource() == quitter) {
+        if (source == restart) {
+            try {
+                jeu.restart();
+            }
+            catch (Throwable ex) {
+            }
+            this.dispose();
+        }
+        if (source == quitter) {
             System.exit(0);
         }
     }
