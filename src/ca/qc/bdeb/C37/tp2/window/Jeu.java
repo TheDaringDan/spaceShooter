@@ -36,8 +36,10 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * Choix de contrôles
      */
-    private IdCtrl ctrl;
-    private IdCtrl memCtrl;
+    private IdCtrl ctrl, memCtrl;
+    
+    private CtrlClavier clavier;
+    private CtrlSouris souris;
 
     /**
      * Objets
@@ -93,9 +95,10 @@ public class Jeu extends Canvas implements Runnable {
         // Ajoute des ennemis
         controlleur.gererMobs();
 
-        addKeyListener(new CtrlClavier(controlleur, this));
+        clavier = new CtrlClavier(controlleur, this);
+        addKeyListener(clavier);
 
-        CtrlSouris souris = new CtrlSouris(controlleur, this);
+        souris = new CtrlSouris(controlleur, this);
         addMouseMotionListener(souris);
         addMouseListener(souris);
 
@@ -143,21 +146,20 @@ public class Jeu extends Canvas implements Runnable {
         paused = false;
     }
     
-    public void gameOver() {
+    public void gameOver() throws Throwable {
         controlleur.reset();
+        removeKeyListener(clavier);
+        removeMouseListener(souris);
+        removeMouseMotionListener(souris);
+        
         ctrl = null;
-        paused = true;
-
-        ecranFin = new GameOver(this, score);
-    }
-    
-    public void restart() throws Throwable {
         running = false;
         finalize();
         thread = null;
         
         System.gc();
-        start();
+
+        ecranFin = new GameOver(this, score);
     }
     
     /**
@@ -262,6 +264,10 @@ public class Jeu extends Canvas implements Runnable {
 
     public static void incrementerScore(int score) {
         Jeu.score += score;
+    }
+
+    public static void decrementerScore(int score) {
+        Jeu.score -= score;
     }
 
     /**

@@ -1,14 +1,11 @@
 package ca.qc.bdeb.C37.tp2.window;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -93,11 +90,7 @@ public class GameOver extends JFrame implements ActionListener {
             ScoreBoard scores = new ScoreBoard();
         }
         if (source == restart) {
-            try {
-                jeu.restart();
-            }
-            catch (Throwable ex) {
-            }
+            jeu.start();
             this.dispose();
         }
         if (source == quitter) {

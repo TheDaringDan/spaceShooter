@@ -87,20 +87,24 @@ public class CtrlClavier extends KeyAdapter {
             ObjetJeu temp = controlleur.objets.get(i);
             
             if (temp.getId() == IdObjet.Joueur) {
-                if (temp.getVelX() != 0) {
+                if (temp.getVelX() > 0) {
                     if (touche == KeyEvent.VK_RIGHT) {
                         temp.setVelX(temp.getVelX() - 1);
                     }
-                    else if (touche == KeyEvent.VK_LEFT) {
+                }
+                if (temp.getVelX() < 0) {
+                    if (touche == KeyEvent.VK_LEFT) {
                         temp.setVelX(temp.getVelX() + 1);
                     }
                 }
                 
-                if (temp.getVelY() != 0) {
+                if (temp.getVelY() > 0) {
                     if (touche == KeyEvent.VK_DOWN) {
                         temp.setVelY(temp.getVelY() - 1);
                     }
-                    else if (touche == KeyEvent.VK_UP) {
+                }
+                if (temp.getVelY() < 0) {
+                    if (touche == KeyEvent.VK_UP) {
                         temp.setVelY(temp.getVelY() + 1);
                     }
                 }

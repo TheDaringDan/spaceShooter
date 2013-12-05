@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -63,7 +65,11 @@ public class Joueur extends ObjetJeu {
             frame = 0;
         }
         else if (exploding && frame == 3) {
-            jeu.gameOver();
+            try {
+                jeu.gameOver();
+            } catch (Throwable ex) {
+                System.out.println(ex.toString());
+            }
         }
         
         // Même vitesse peut importe la direction

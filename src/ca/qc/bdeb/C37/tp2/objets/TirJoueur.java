@@ -1,6 +1,7 @@
 package ca.qc.bdeb.C37.tp2.objets;
 
 import ca.qc.bdeb.C37.tp2.audio.AudioJeu;
+import ca.qc.bdeb.C37.tp2.window.Jeu;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -32,6 +33,7 @@ public class TirJoueur extends ObjetJeu{
         
         if (y < -H) {
             controlleur.enleverObjet(this);
+            Jeu.decrementerScore(1);
         }
     }
 
