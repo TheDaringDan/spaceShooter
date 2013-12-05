@@ -1,5 +1,6 @@
 package ca.qc.bdeb.C37.tp2.window;
 
+import ca.qc.bdeb.C37.tp2.audio.Audio;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -21,11 +22,13 @@ public class Vue {
      */
     public static final int L = 500, H = 710;
     
-    Jeu jeu;
+    private Jeu jeu;
     
-    Dimension dimension;
+    private Audio audio;
     
-    JFrame frame;
+    private final Dimension dimension;
+    
+    private JFrame frame;
     
     /**
      * Constructeur.
@@ -55,6 +58,9 @@ public class Vue {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
+        audio = new Audio();
+        audio.run();
         
     }
     

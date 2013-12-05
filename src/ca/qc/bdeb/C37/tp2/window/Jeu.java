@@ -1,5 +1,6 @@
 package ca.qc.bdeb.C37.tp2.window;
 
+import ca.qc.bdeb.C37.tp2.audio.Audio;
 import ca.qc.bdeb.C37.tp2.objets.*;
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -19,7 +20,8 @@ public class Jeu extends Canvas implements Runnable {
     /**
      * État du jeu
      */
-    public boolean running = false, paused = false;
+    public static boolean running = false;
+    public boolean paused = false;
 
     /**
      * Stats du jeu
@@ -125,6 +127,7 @@ public class Jeu extends Canvas implements Runnable {
     }
 
     public void resume() {
+        
         menu.dispose();
         requestFocus();
         ctrl = memCtrl;
