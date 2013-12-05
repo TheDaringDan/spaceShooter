@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ca.qc.bdeb.C37.tp2.objets;
 
+import ca.qc.bdeb.C37.tp2.audio.AudioJeu;
 import ca.qc.bdeb.C37.tp2.window.Vue;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,17 +11,21 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Danmasta97
+ * @author Danmasta97, jerome
  */
 public class TirEnnemi extends ObjetJeu{
     
     public final static int L = 13, H = 22, V = 8;
     public int ready = 0;
+    
+    private final static AudioJeu sonTir = new AudioJeu("sfx/laser2.wav");
 
     public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
         ready = 25;
+        
+        sonTir.play();
     }
 
     @Override

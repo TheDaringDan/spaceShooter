@@ -21,17 +21,27 @@ public class Joueur extends ObjetJeu {
      */
     public static final int L = 50, H = 55, V = 8;
     
+    /**
+     * Importance des dommages subits
+     */
+    private final int DEGAT_LASER = 20, DEGAT_COLLISION = 50;
+    
+    /**
+     * Graphiques
+     */
     public BufferedImage playerSprite[];
     public BufferedImage playerDamaged;
-    public int frame = 0;
-    public int timer;
+    /**
+     * Pour contrôle de l'image
+     */
+    public int frame = 0, damaged = 0, timer;
     boolean exploding = false;
-    int damaged = 0;
-    private final int DEGAT_LASER = 20;
-    private final int DEGAT_COLLISION = 50;
     
     private final Jeu jeu;
-    // Facteurs pour calculer la vitesse diagonale
+    
+    /**
+     * Pour calculer la vitesse diagonale
+     */
     float delta;
 
     public Joueur(float x, float y, Jeu jeu, IdObjet id) {
@@ -56,6 +66,7 @@ public class Joueur extends ObjetJeu {
             jeu.gameOver();
         }
         
+        // Même vitesse peut importe la direction
         if (velX != 0 || velY != 0) {
             delta = (float) Math.sqrt(velX * velX + velY * velY);
             x += Joueur.V * velX/delta;
@@ -65,6 +76,11 @@ public class Joueur extends ObjetJeu {
         gererCollision(controlleur);
     }
     
+    /**
+     * Gestion des conséquences aux collisions
+     * 
+     * @param controlleur 
+     */
     private void gererCollision(ControlleurObjets controlleur) {
         for (int i = 0; i < controlleur.objets.size(); i++) {
             ObjetJeu temp = controlleur.objets.get(i);
@@ -88,31 +104,6 @@ public class Joueur extends ObjetJeu {
                     velX = 0;
                 }
             }
-            // Contrôles avec la souris -> arrêt au pointeur
-            else if (temp.getId() == IdObjet.Pointeur &&
-                        jeu.getCtrl() == IdCtrl.SOURIS) {
-                
-                if (x + L*4/7 <= temp.getX()) {
-                    velX = 1;
-                }
-                else if (x + L*3/7>= temp.getX()) {
-                    velX = -1;
-                }
-                else {
-                    velX = 0;
-                }
-                
-                if (y + H*4/7 <= temp.getY()) {
-                    velY = 1;
-                }
-                else if (y + H*3/7 >= temp.getY()) {
-                    velY = -1;
-                }
-                else {
-                    velY = 0;
-                }
-                
-            }
             // Dommages reçus (laser)
             else if (temp.getId() == IdObjet.TirEnnemi) {
                 if (contact().intersects(temp.contact())) {
@@ -130,9 +121,37 @@ public class Joueur extends ObjetJeu {
                     controlleur.enleverObjet(temp);
                 }
             }
+            // Contrôles avec la souris -> arrêt au pointeur
+            else if (temp.getId() == IdObjet.Pointeur &&
+                        jeu.getCtrl() == IdCtrl.SOURIS) {
+                
+                if (x + L*4/7 <= temp.getX()) {
+                    velX = temp.getX() - (x + L/2);
+                }
+                else if (x + L*3/7 >= temp.getX()) {
+                    velX = temp.getX() - (x + L/2);
+                }
+                else {
+                    velX = 0;
+                }
+                
+                if (y + H*4/7 <= temp.getY()) {
+                    velY = temp.getY() - (y + H/2);
+                }
+                else if (y + H*3/7 >= temp.getY()) {
+                    velY = temp.getY() - (y + H/2);
+                }
+                else {
+                    velY = 0;
+                }
+            }
         }
     }
 
+    /**
+     * Affichage dynamique
+     * @param g 
+     */
     @Override
     public void render(Graphics g) {
         this.img = playerSprite[frame];
@@ -152,7 +171,10 @@ public class Joueur extends ObjetJeu {
 //        g2d.draw(contactGauche());
 //        g2d.draw(contactDroite());
     }
-    
+ 
+    /**
+     * 
+     */
     @Override
     public final void setImg() {
         BufferedImage playerImg;
@@ -169,6 +191,9 @@ public class Joueur extends ObjetJeu {
         this.img = playerSprite[frame];
     }
 
+    /**
+     * @return Zone de contact pour les collisions dangereuses
+     */
     @Override
     public Rectangle contact() {
         return new Rectangle((int)x, (int)y + 10, L, H - 10);
@@ -178,22 +203,37 @@ public class Joueur extends ObjetJeu {
 //        return new Rectangle((int)x + L/2-5, (int)y + H/2-7, 10, 14);
 //    }
 
+    /**
+     * @return Zone de contact pour les collisions avec la frontière supérieure
+     */
     public Rectangle contactHaut() {
         return new Rectangle((int)x + 20, (int)y + 5, L - 40, H/2 - 5);
     }
 
+    /**
+     * @return Zone de contact pour les collisions avec la frontière inférieure
+     */
     public Rectangle contactBas() {
         return new Rectangle((int)x + 20, (int)y + H/2 + 5, L - 40, H/2 - 5);
     }
 
+    /**
+     * @return Zone de contact pour les collisions avec la frontière de droite
+     */
     public Rectangle contactDroite() {
         return new Rectangle((int)x + L - 8, (int)y + 10, 8, H - 20);
     }
 
+    /**
+     * @return Zone de contact pour les collisions avec la frontière de gauche
+     */
     public Rectangle contactGauche() {
         return new Rectangle((int)x, (int)y + 10, 8, H - 20);
     }
     
+    /**
+     * Destruction du joueur -> fin de la partie
+     */
     public void detruireJoueur(){
         BufferedImage playerImg;
         try {
@@ -207,6 +247,9 @@ public class Joueur extends ObjetJeu {
         frame = 0;
     }
     
+    /**
+     * @param degats subits par le vaisseau
+     */
     public void endommager(int degats){
         Jeu.perdreVie(degats);
         if (Jeu.getVie() <= 0) {

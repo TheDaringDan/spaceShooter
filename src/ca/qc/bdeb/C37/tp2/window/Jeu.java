@@ -1,6 +1,6 @@
 package ca.qc.bdeb.C37.tp2.window;
 
-import ca.qc.bdeb.C37.tp2.audio.Audio;
+import ca.qc.bdeb.C37.tp2.audio.AudioJeu;
 import ca.qc.bdeb.C37.tp2.objets.*;
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -55,6 +55,8 @@ public class Jeu extends Canvas implements Runnable {
     private Menu menu;
     
     private GameOver ecranFin;
+    
+    private final static AudioJeu musique = new AudioJeu("sfx/555974_reedz.wav");
 
     /**
      *
@@ -115,6 +117,8 @@ public class Jeu extends Canvas implements Runnable {
     }
 
     public void pause() {
+        musique.stop();
+        
         if (ctrl == null) {
             memCtrl = IdCtrl.CLAVIER;
         } else {
@@ -127,6 +131,7 @@ public class Jeu extends Canvas implements Runnable {
     }
 
     public void resume() {
+        musique.loop();
         
         menu.dispose();
         requestFocus();
