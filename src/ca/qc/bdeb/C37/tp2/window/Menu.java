@@ -25,11 +25,10 @@ public class Menu extends JFrame implements ActionListener {
     private final Jeu jeu;
     
     private final String instrClavier = "<html>Mouvement :<br/>flêches<br/>"
-            + "<br/>Tir :<br/>espace",
+            + "<br/>Tir :<br/>espace<br/><br/>Souris :<br/>'c'<br/>",
             instrSouris = "<html>Mouvement :<br/>souris<br/>"
-            + "<br/>Tir :<br/>clic gauche",
-            instr = "<br/><br/>Contrôles :<br/>'c'<br/>"
-            + "<br/>Pause :<br/>'p'</html>";
+            + "<br/>Tir :<br/>clic gauche<br/><br/>Clavier :<br/>'c'<br/>",
+            instr = "<br/>Pause :<br/>'p'</html>";
     
     public Menu(Jeu jeu) {
         this.jeu = jeu;
@@ -81,7 +80,7 @@ public class Menu extends JFrame implements ActionListener {
     private void creerBouttons() {
         play = new JButton("Play");
         quitter = new JButton("Quitter");
-        chCtrls = new JButton("Contrôles");
+        chCtrls = new JButton("Changer contrôles");
         top = new JButton("Top Scores");
         
         play.addActionListener(this);

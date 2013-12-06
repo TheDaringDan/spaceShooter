@@ -1,6 +1,5 @@
 package ca.qc.bdeb.C37.tp2.window;
 
-import ca.qc.bdeb.C37.tp2.audio.AudioJeu;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -20,7 +19,7 @@ public class Vue {
     /**
      * Dimensions de l'aire de jeu
      */
-    public static final int L = 500, H = 710;
+    public static final int L = 500, H = 700;
     
     private Jeu jeu;
     

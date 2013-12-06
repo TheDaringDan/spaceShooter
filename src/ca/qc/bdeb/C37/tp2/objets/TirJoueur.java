@@ -18,12 +18,13 @@ public class TirJoueur extends ObjetJeu{
     public final static int L = 13, H = 22, V = 12;
     private static int ready;
     
-    private final static AudioJeu sonTir = new AudioJeu("sfx/laser1.wav");
+    private final AudioJeu sonTir;
 
     public TirJoueur(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
         ready = 10;
+        sonTir = new AudioJeu("sfx/laser1.wav");
         sonTir.play();
     }
 

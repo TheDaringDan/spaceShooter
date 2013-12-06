@@ -58,7 +58,7 @@ public class Jeu extends Canvas implements Runnable {
     
     private GameOver ecranFin;
     
-    private final static AudioJeu musique = new AudioJeu("sfx/555974_reedz.wav");
+    private AudioJeu musique;
 
     /**
      *
@@ -92,9 +92,6 @@ public class Jeu extends Canvas implements Runnable {
         // Ajouter le pointeur
         controlleur.ajouterObjet(new Pointeur(0, 0, IdObjet.Pointeur));
 
-        // Ajoute des ennemis
-        controlleur.gererMobs();
-
         clavier = new CtrlClavier(controlleur, this);
         addKeyListener(clavier);
 
@@ -115,6 +112,7 @@ public class Jeu extends Canvas implements Runnable {
         
         thread = new Thread(this);
         thread.start();
+        musique = new AudioJeu("sfx/555974_reedz.wav");
         running = true;
         pause();
     }
@@ -152,6 +150,8 @@ public class Jeu extends Canvas implements Runnable {
         removeMouseListener(souris);
         removeMouseMotionListener(souris);
         
+        musique.stop();
+        musique = null;
         ctrl = null;
         running = false;
         finalize();

@@ -18,13 +18,14 @@ public class TirEnnemi extends ObjetJeu{
     public final static int L = 13, H = 22, V = 8;
     public int ready = 0;
     
-    private final static AudioJeu sonTir = new AudioJeu("sfx/laser2.wav");
+    private final AudioJeu sonTir;
 
     public TirEnnemi(float x, float y, IdObjet id) {
         super(x, y, id);
         setImg();
         ready = 25;
         
+        sonTir = new AudioJeu("sfx/laser2.wav");
         sonTir.play();
     }
 
